@@ -1,0 +1,349 @@
+I am building a microservices-based ERP system for my software startup TekRem (Technology Remedies Innovations), based in Zambia (2024). I want to use:
+
+Laravel for backend microservices
+
+Laravel Jetstream with Inertia + React for frontend
+
+ShadCN UI for modern React components styled with Tailwind
+
+MySQL via XAMPP (for both local development and production)
+
+No Docker — development and deployment use standard Laravel + XAMPP stack
+
+✅ My Requirements:
+1. Microservices Architecture
+Each of the following apps should be a separate Laravel Jetstream + React (Inertia + ShadCN) project:
+
+Authentication & User Management
+- User registration and authentication
+- User profile management
+- Two-factor authentication
+- API token management
+- Role and permission management (admin, manager, user roles)
+- Password reset functionality
+- Email verification
+
+Project & Task Management (with time logs)
+
+CRM / Client Management (with Live Chat functionality)
+
+Billing & Invoicing
+
+HR & Team Collaboration
+
+Support Ticketing
+
+Developer Resource Hub
+
+Analytics & Reporting Dashboard
+
+2. Setup Instructions (Per Microservice)
+For each microservice, follow this to initialize:
+
+bash
+Copy
+Edit
+composer create-project laravel/laravel service-name
+cd service-name
+composer require laravel/jetstream
+php artisan jetstream:install inertia
+npx laravel-jetstream-react@latest install
+npm install
+npx shadcn@latest init
+npx shadcn@latest add button input dialog card
+npm run dev
+php artisan migrate
+Use Jetstream with Inertia + React
+
+✅ Integrated ShadCN UI for reusable, styled components (40+ components including cards, buttons, modals, accordions, tabs, separators, sheets, popovers, navigation menus, dropdowns, command palettes, breadcrumbs, inputs, textareas, selects, checkboxes, switches, radio buttons, forms, labels, calendars, dialog modals, alert dialogs, sonners, tooltips, skeleton loaders, badges, avatars, progress bars, hover cards, tables, scroll areas, carousels, menubars, resizable panels, etc.)
+
+✅ All forms and components must use shadcn UI components, including:
+   - Authentication forms (login, register, password reset, etc.)
+   - User management forms (create, edit, delete users)
+   - Role management forms (create, edit, delete roles)
+   - Permission management forms (create, edit, delete permissions)
+   - All other forms and components in the system
+   - Replace traditional checkboxes with Switch components where appropriate
+
+✅ Role-based conditional navigation that shows/hides menu items based on user permissions
+
+✅ Multilingual support with i18next for English and Zambian languages (Bemba, Nyanja, Tonga)
+
+⚠️ IMPORTANT LOCALIZATION CONFIGURATION REQUIREMENTS:
+1. Proper i18n directory structure:
+   - resources/js/i18n/index.ts - Main configuration file
+   - resources/js/i18n/locales/{en,bem,nya,toi}/translation.json - Translation files
+
+2. Correct language codes:
+   - English: 'en'
+   - Bemba: 'bem' (not 'bemba')
+   - Nyanja: 'nya' (not 'nyanja')
+   - Tonga: 'toi' (not 'tonga')
+
+3. Consistent LanguageSwitcher component:
+   - Import from '@/Components/LanguageSwitcher' (capital C)
+   - Use in AppLayout.tsx and other components
+   - Avoid duplicate components with different paths
+
+✅ Role-based dashboard with different visualizations and information for each user role:
+   - Admin dashboard: System overview, user statistics, role distribution charts
+   - Manager dashboard: Team overview, project status, task completion metrics
+   - User dashboard: Personal tasks, account information, activity metrics
+
+⚠️ IMPORTANT: All other microservices MUST implement the following features from the auth service:
+
+1. UI/UX Features:
+   - ShadCN UI components and theming for ALL forms and components (40+ components)
+   - Use Switch components instead of traditional checkboxes where appropriate
+   - Breadcrumbs for improved navigation and user experience
+   - Dark/light mode toggle
+   - Responsive design for mobile and desktop
+   - Role-based conditional navigation using the usePermissions hook
+   - Role-based dashboard with visualizations specific to each user role
+   - Multilingual support with i18next for English and Zambian languages (Bemba, Nyanja, Tonga)
+   - Consistent app layout and navigation structure
+   - Toast notifications using sonner
+   - Charts and data visualizations using Recharts
+   - Live chat functionality with WebSockets for real-time communication (especially in CRM service)
+   - Proper error handling for WebSocket connections
+   - Graceful fallback when WebSocket services are unavailable
+
+2. Infrastructure Features:
+   - Email notifications using Mailtrap
+   - Form validation with error handling
+   - API endpoints for inter-service communication
+   - Role and permission-based access control
+   - Proper error handling and user feedback
+
+3. Development Patterns:
+   - TypeScript for type safety
+   - React hooks for state management
+   - Inertia.js for server-client communication
+   - Consistent folder structure
+   - Component reuse across services
+
+The goal is to maintain a consistent user experience and development pattern across all microservices while allowing each service to focus on its specific business logic.
+
+3. Full CRUD + Business Logic
+Each service must include:
+
+CRUD for all relevant entities (users, clients, tasks, invoices, etc.)
+
+Business logic (e.g. auto-generate time logs, sub-tasks)
+
+Validation and permission handling
+
+Use Laravel Policies and Form Requests
+
+4. Email Notifications (Laravel Mail)
+Real email notifications using Mailtrap (dev) and SMTP (prod)
+
+Emails for:
+
+Registration and verification
+
+Task assignment
+
+Task completion or flagging
+
+Overdue reminders
+
+5. React (Inertia) Frontend with ShadCN UI
+Build frontend pages using Inertia + React
+
+Use ShadCN UI for components:
+
+Card, Button, Dialog, Input, Tabs, Toast, etc.
+
+Example components/pages:
+
+Project Dashboard
+
+Task Board (Kanban)
+
+Client Table with search/filter
+
+Invoice Generator
+
+User Profile & Settings
+
+6. Microservices Communication
+Each service exposes its own REST API via routes/api.php
+
+Services communicate via HTTP APIs (using Axios or Laravel Guzzle)
+
+Example: HR service pulls roles from Auth service
+
+✅ Authentication Across Microservices:
+- Single Sign-On (SSO) implementation using JWT tokens
+- Auth service handles authentication and issues tokens
+- Other services validate tokens with the auth service
+- Shared database for user information
+- Token validation endpoints in the auth service
+
+⚠️ IMPORTANT AUTHENTICATION CONFIGURATION REQUIREMENTS:
+1. Each microservice must have the correct APP_URL in .env with the proper port:
+   - auth-service: APP_URL=http://localhost:8000
+   - crm-service: APP_URL=http://localhost:8001
+   - project-service: APP_URL=http://localhost:8002
+   - etc.
+
+2. Session and cookie configuration:
+   - SESSION_DOMAIN=null (no subdomain functionality)
+   - SESSION_SAME_SITE=lax
+   - Proper CORS configuration for cross-service communication
+
+3. Detailed logging for debugging:
+   - Log authentication attempts
+   - Log redirect URLs
+   - Log user data from authentication
+
+Auth Service API Endpoints:
+- `POST /api/login`: Authenticate a user
+- `POST /api/register`: Register a new user
+- `GET /api/user`: Get the authenticated user
+- `PUT /api/user`: Update the authenticated user
+- `GET /api/users`: Get all users (admin only)
+- `GET /api/users/{id}`: Get a specific user (admin only)
+- `PUT /api/users/{id}`: Update a specific user (admin only)
+- `DELETE /api/users/{id}`: Delete a specific user (admin only)
+- `GET /api/roles`: Get all roles (admin only)
+- `POST /api/roles`: Create a new role (admin only)
+- `GET /api/permissions`: Get all permissions (admin only)
+- `GET /api/auth/validate-token`: Validate a token and return user information (for SSO)
+- `GET /api/auth/user`: Get the authenticated user information (for SSO)
+
+7. Database Migrations and Shared Database
+
+✅ Shared Database Approach:
+- All microservices connect to the same MySQL database
+- Auth service owns the shared tables (users, roles, permissions)
+- Other services create their own domain-specific tables
+- Migrations include checks to prevent duplicate table creation:
+  ```php
+  if (!Schema::hasTable('table_name')) {
+      Schema::create('table_name', function (Blueprint $table) {
+          // Table structure
+      });
+  }
+  ```
+- Migration order: Auth service first, then other services
+
+8. Recommended Directory Structure
+bash
+Copy
+Edit
+/service-name/
+├── app/
+├── resources/
+│   └── js/
+│       ├── Components/ (ShadCN UI components)
+│       └── Pages/
+│           └── Dashboard.jsx
+│           └── Tasks.jsx
+│           └── Clients.jsx
+├── routes/
+│   ├── web.php
+│   └── api.php
+├── .env
+9. Default User Accounts
+The following default user accounts are available for testing:
+
+- Admin User:
+  - Email: admin@tekrem.com
+  - Password: password
+  - Role: admin
+  - Permissions: All permissions (view_users, create_users, edit_users, delete_users, view_roles, create_roles, edit_roles, delete_roles, view_permissions, assign_permissions)
+
+- Manager User:
+  - Email: test@example.com
+  - Password: password
+  - Role: manager
+  - Permissions: view_users, create_users, edit_users, view_roles, view_permissions
+
+- Regular Users:
+  - Various regular users with the 'user' role
+  - Permissions: view_users
+
+10. Bonus (Optional): n8n Workflow Automation
+Help me plan how to integrate n8n to automate inter-service workflows.
+
+✅ Task Notifications
+Trigger: Task created/updated/flagged
+
+Action: Send Slack or Email via n8n
+
+📅 Weekly Reports
+Trigger: Every Monday 8AM
+
+Action: Pull data (Analytics, Billing), format, and send to management
+
+🔄 CRM-to-Billing Sync
+Trigger: New/updated client
+
+Action: Sync to Billing service and trigger welcome email
+
+📇 Lead → Onboarding
+Trigger: New CRM lead
+
+Action: Auto-create project + tasks and notify team
+
+🚨 Escalation Flow
+Trigger: Flagged support ticket
+
+Action: Alert team, open issue in Trello or GitHub
+
+🕒 Timesheet Reporting
+Trigger: End of workweek
+
+Action: Compile time logs and send report
+
+🧾 Invoicing
+Trigger: Milestone completed
+
+Action: Auto-generate invoice + send reminders if overdue
+
+📥 Backup
+Trigger: Daily
+
+Action: Export data from all microservices and store in cloud (S3, Google Drive)
+
+Please provide:
+
+Laravel models, migrations, policies, controllers
+
+Inertia React pages with ShadCN UI components
+
+API definitions and routes
+
+Mail configuration via .env
+
+n8n webhook or API integration plan
+
+
+11. Landing Page and Guest Layout Requirements
+
+auth service should have:
+
+- Landing Page with sections:
+  - Hero section with call-to-action
+  - Features overview
+  - Partners/clients section
+  - Team members section
+  - Blog/insights preview
+  - Testimonials
+  - Contact form
+
+- Additional Guest Pages:
+  - About Us page
+  - Team page with member profiles
+  - Contact page with form and map
+  - Blog/Insights page with articles
+  - Privacy Policy and Terms of Service pages
+
+- Guest Layout Components:
+  - Header with navigation
+  - Footer with links and social media
+  - Mobile-responsive design
+  - Dark/light mode toggle
+

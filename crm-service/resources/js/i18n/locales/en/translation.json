@@ -1,0 +1,135 @@
+{
+  "welcome": {
+    "title": "TekRem CRM Service",
+    "subtitle": "Customer Relationship Management",
+    "description": "Manage your clients, leads, and communications efficiently with our comprehensive CRM solution.",
+    "login": "Log in",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "features": "Features",
+    "getStarted": "Get Started"
+  },
+  "features": {
+    "clientManagement": {
+      "title": "Client Management",
+      "description": "Organize and manage your clients with detailed profiles, communication history, and activity tracking."
+    },
+    "leadTracking": {
+      "title": "Lead Tracking",
+      "description": "Track potential clients from initial contact through the sales pipeline to conversion."
+    },
+    "communication": {
+      "title": "Communication History",
+      "description": "Keep a record of all client interactions including emails, calls, meetings, and notes."
+    },
+    "liveChat": {
+      "title": "Live Chat",
+      "description": "Communicate with clients and leads in real-time through our integrated chat system."
+    },
+    "reporting": {
+      "title": "Reporting & Analytics",
+      "description": "Generate insights with customizable reports and visual analytics dashboards."
+    },
+    "integration": {
+      "title": "Integration",
+      "description": "Seamlessly connect with other TekRem services including Billing, Project Management, and more."
+    }
+  },
+  "common": {
+    "learnMore": "Learn More",
+    "viewDemo": "View Demo",
+    "contactUs": "Contact Us",
+    "poweredBy": "Powered by TekRem",
+    "version": "Version"
+  },
+  "clients": {
+    "title": "Clients",
+    "addClient": "Add Client",
+    "editClient": "Edit Client",
+    "clientDetails": "Client Details",
+    "clientCommunications": "Client Communications",
+    "statusActive": "Active",
+    "statusInactive": "Inactive",
+    "statusPotential": "Potential",
+    "statusFormer": "Former",
+    "createSuccess": "Client created successfully",
+    "updateSuccess": "Client updated successfully",
+    "deleteSuccess": "Client deleted successfully",
+    "createError": "Error creating client",
+    "updateError": "Error updating client",
+    "deleteError": "Error deleting client"
+  },
+  "leads": {
+    "title": "Leads",
+    "addLead": "Add Lead",
+    "editLead": "Edit Lead",
+    "leadDetails": "Lead Details",
+    "leadCommunications": "Lead Communications",
+    "statusNew": "New",
+    "statusContacted": "Contacted",
+    "statusQualified": "Qualified",
+    "statusUnqualified": "Unqualified",
+    "statusNegotiation": "Negotiation",
+    "statusWon": "Won",
+    "statusLost": "Lost",
+    "createSuccess": "Lead created successfully",
+    "updateSuccess": "Lead updated successfully",
+    "deleteSuccess": "Lead deleted successfully",
+    "createError": "Error creating lead",
+    "updateError": "Error updating lead",
+    "deleteError": "Error deleting lead",
+    "convertToClient": "Convert to Client",
+    "confirmConvert": "Are you sure you want to convert this lead to a client?",
+    "convertSuccess": "Lead converted to client successfully",
+    "convertError": "Error converting lead to client"
+  },
+  "communications": {
+    "title": "Communications",
+    "addCommunication": "Add Communication",
+    "editCommunication": "Edit Communication",
+    "typeEmail": "Email",
+    "typeCall": "Call",
+    "typeMeeting": "Meeting",
+    "typeNote": "Note",
+    "typeOther": "Other",
+    "createSuccess": "Communication added successfully",
+    "updateSuccess": "Communication updated successfully",
+    "deleteSuccess": "Communication deleted successfully",
+    "createError": "Error adding communication",
+    "updateError": "Error updating communication",
+    "deleteError": "Error deleting communication",
+    "fetchError": "Error fetching communications"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "adminView": "Admin View",
+    "managerView": "Manager View",
+    "userView": "User View",
+    "clientStats": "Client Statistics",
+    "leadStats": "Lead Statistics",
+    "communicationStats": "Communication Statistics",
+    "totalClients": "Total Clients",
+    "totalLeads": "Total Leads",
+    "totalCommunications": "Total Communications",
+    "monthlyAcquisition": "Monthly Acquisition",
+    "acquisitionDescription": "New clients and leads acquired per month",
+    "leadConversionRate": "Lead Conversion Rate",
+    "conversionRateDescription": "Percentage of leads converted to clients",
+    "recentClients": "Recent Clients",
+    "recentLeads": "Recent Leads",
+    "recentClientsDescription": "Recently added clients",
+    "recentLeadsDescription": "Recently added leads",
+    "recentCommunications": "Recent Communications",
+    "recentCommunicationsDescription": "Recent client and lead interactions",
+    "yourRecentCommunications": "Your recent communications",
+    "assignedClients": "Assigned Clients",
+    "assignedLeads": "Assigned Leads",
+    "assignedClientsDescription": "Clients assigned to you",
+    "assignedLeadsDescription": "Leads assigned to you",
+    "noAssignedClients": "No clients assigned to you",
+    "noAssignedLeads": "No leads assigned to you",
+    "noCommunications": "No communications yet",
+    "clients": "Clients",
+    "leads": "Leads"
+  }
+}

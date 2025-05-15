@@ -1,0 +1,135 @@
+{
+  "welcome": {
+    "title": "TekRem CRM Service",
+    "subtitle": "Kusamalira Ubale ndi Makasitomala",
+    "description": "Samalani makasitomala anu, mitsogoleri, ndi zolankhulana mwamphamvu ndi njira yathu yathunthu ya CRM.",
+    "login": "Lowani",
+    "register": "Lembetsani",
+    "dashboard": "Dashbodi",
+    "features": "Zinthu",
+    "getStarted": "Yambani"
+  },
+  "features": {
+    "clientManagement": {
+      "title": "Kusamalira Makasitomala",
+      "description": "Konzani ndi kusamalira makasitomala anu ndi mbiri yatsatanetsatane, mbiri yazolankhulana, ndi kutsatira zochitika."
+    },
+    "leadTracking": {
+      "title": "Kutsatira Mitsogoleri",
+      "description": "Tsatirani makasitomala omwe angakhale kuchokera pakukhudza koyamba kupyola mu njira yogulitsa mpaka kutembenuka."
+    },
+    "communication": {
+      "title": "Mbiri Yazolankhulana",
+      "description": "Sungani mbiri ya zolankhulana zonse za makasitomala kuphatikiza ma imelo, mafoni, misonkhano, ndi zolemba."
+    },
+    "liveChat": {
+      "title": "Kucheza Kwatsopano",
+      "description": "Lankhulani ndi makasitomala ndi atsogoleri mwanthawi yeniyeni kudzera mu njira yathu yolumikizidwa yochezera."
+    },
+    "reporting": {
+      "title": "Kulemba Lipoti ndi Kusanthula",
+      "description": "Pangani nzeru ndi malipoti omwe amatha kusinthidwa ndi ma dashbodi owoneka."
+    },
+    "integration": {
+      "title": "Kulumikizana",
+      "description": "Lumikizanani mosavuta ndi ntchito zina za TekRem kuphatikiza Billing, Project Management, ndi zina zambiri."
+    }
+  },
+  "common": {
+    "learnMore": "Phunzirani Zambiri",
+    "viewDemo": "Onani Demo",
+    "contactUs": "Tilumikizeni",
+    "poweredBy": "Yamphamvu ndi TekRem",
+    "version": "Mtundu"
+  },
+  "clients": {
+    "title": "Makasitomala",
+    "addClient": "Onjezani Kasitomala",
+    "editClient": "Sinthani Kasitomala",
+    "clientDetails": "Tsatanetsatane wa Kasitomala",
+    "clientCommunications": "Zolankhulana za Kasitomala",
+    "statusActive": "Yogwira Ntchito",
+    "statusInactive": "Yosagwira Ntchito",
+    "statusPotential": "Yotheka",
+    "statusFormer": "Yakale",
+    "createSuccess": "Kasitomala wapangidwa bwino",
+    "updateSuccess": "Kasitomala wasinthidwa bwino",
+    "deleteSuccess": "Kasitomala wachotsedwa bwino",
+    "createError": "Vuto popanga kasitomala",
+    "updateError": "Vuto posintha kasitomala",
+    "deleteError": "Vuto pochotsa kasitomala"
+  },
+  "leads": {
+    "title": "Mitsogoleri",
+    "addLead": "Onjezani Mtsogoleri",
+    "editLead": "Sinthani Mtsogoleri",
+    "leadDetails": "Tsatanetsatane wa Mtsogoleri",
+    "leadCommunications": "Zolankhulana za Mtsogoleri",
+    "statusNew": "Watsopano",
+    "statusContacted": "Walumikizidwa",
+    "statusQualified": "Woyenera",
+    "statusUnqualified": "Wosayenera",
+    "statusNegotiation": "Kukambirana",
+    "statusWon": "Wapambana",
+    "statusLost": "Wataika",
+    "createSuccess": "Mtsogoleri wapangidwa bwino",
+    "updateSuccess": "Mtsogoleri wasinthidwa bwino",
+    "deleteSuccess": "Mtsogoleri wachotsedwa bwino",
+    "createError": "Vuto popanga mtsogoleri",
+    "updateError": "Vuto posintha mtsogoleri",
+    "deleteError": "Vuto pochotsa mtsogoleri",
+    "convertToClient": "Sinthani kukhala Kasitomala",
+    "confirmConvert": "Kodi ndinu otsimikiza kuti mukufuna kusintha mtsogoleri uyu kukhala kasitomala?",
+    "convertSuccess": "Mtsogoleri wasinthidwa kukhala kasitomala bwino",
+    "convertError": "Vuto posintha mtsogoleri kukhala kasitomala"
+  },
+  "communications": {
+    "title": "Zolankhulana",
+    "addCommunication": "Onjezani Zolankhulana",
+    "editCommunication": "Sinthani Zolankhulana",
+    "typeEmail": "Imelo",
+    "typeCall": "Kuyimba Foni",
+    "typeMeeting": "Msonkhano",
+    "typeNote": "Zolemba",
+    "typeOther": "Zina",
+    "createSuccess": "Zolankhulana zawonjezedwa bwino",
+    "updateSuccess": "Zolankhulana zasinthidwa bwino",
+    "deleteSuccess": "Zolankhulana zachotsedwa bwino",
+    "createError": "Vuto powonjezera zolankhulana",
+    "updateError": "Vuto posintha zolankhulana",
+    "deleteError": "Vuto pochotsa zolankhulana",
+    "fetchError": "Vuto potenga zolankhulana"
+  },
+  "dashboard": {
+    "title": "Dashbodi",
+    "adminView": "Maonekedwe a Admin",
+    "managerView": "Maonekedwe a Manager",
+    "userView": "Maonekedwe a Wogwiritsa",
+    "clientStats": "Ziwerengero za Makasitomala",
+    "leadStats": "Ziwerengero za Mitsogoleri",
+    "communicationStats": "Ziwerengero za Zolankhulana",
+    "totalClients": "Makasitomala Onse",
+    "totalLeads": "Mitsogoleri Yonse",
+    "totalCommunications": "Zolankhulana Zonse",
+    "monthlyAcquisition": "Kupeza kwa Mwezi",
+    "acquisitionDescription": "Makasitomala atsopano ndi mitsogoleri yopezeka pa mwezi",
+    "leadConversionRate": "Muyeso Wosintha Mtsogoleri",
+    "conversionRateDescription": "Peresenti ya mitsogoleri yosinthidwa kukhala makasitomala",
+    "recentClients": "Makasitomala Atsopano",
+    "recentLeads": "Mitsogoleri Yatsopano",
+    "recentClientsDescription": "Makasitomala owonjezedwa posachedwapa",
+    "recentLeadsDescription": "Mitsogoleri yowonjezedwa posachedwapa",
+    "recentCommunications": "Zolankhulana Zaposachedwapa",
+    "recentCommunicationsDescription": "Zolankhulana zaposachedwapa za makasitomala ndi mitsogoleri",
+    "yourRecentCommunications": "Zolankhulana zanu zaposachedwapa",
+    "assignedClients": "Makasitomala Operekedwa",
+    "assignedLeads": "Mitsogoleri Yoperekedwa",
+    "assignedClientsDescription": "Makasitomala operekedwa kwa inu",
+    "assignedLeadsDescription": "Mitsogoleri yoperekedwa kwa inu",
+    "noAssignedClients": "Palibe makasitomala operekedwa kwa inu",
+    "noAssignedLeads": "Palibe mitsogoleri yoperekedwa kwa inu",
+    "noCommunications": "Palibe zolankhulana panopa",
+    "clients": "Makasitomala",
+    "leads": "Mitsogoleri"
+  }
+}

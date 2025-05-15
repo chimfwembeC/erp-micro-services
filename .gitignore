@@ -1,0 +1,62 @@
+# Laravel
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+
+# Laravel 5 & Lumen specific with changed public path
+public_html/storage
+public_html/hot
+
+# Laravel storage
+storage/*.key
+.env
+Homestead.yaml
+Homestead.json
+/.vagrant
+.phpunit.result.cache
+
+# IDE specific files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Docker volumes
+/mysql-data
+
+# n8n data
+/infrastructure/n8n
+
+# Logs
+/logs
+
+# Build files
+/dist
+/build
+
+# Temporary files
+/tmp
+.tmp
+.temp
+
+# Service-specific files
+/services/*/vendor/
+/services/*/node_modules/
+/services/*/.env
+/services/*/storage/*.key
+/services/*/public/storage
+/services/*/public/hot
+/services/*/public/build
+/services/*/.phpunit.result.cache

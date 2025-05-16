@@ -118,10 +118,12 @@ Each service currently handles its own authentication:
    - No actual authentication checks are performed
    - This is a temporary solution until proper authentication is implemented
 
-3. **Subdomain Functionality Removed**:
+3. **Subdomain and SSO Functionality Removed**:
    - The system no longer uses subdomains for different services
    - All services are accessed via different ports on localhost
    - Session and cookie configurations have been updated accordingly
+   - Single Sign-On (SSO) functionality has been removed
+   - Each service now handles its own authentication independently
 
 ## Database Migrations
 
@@ -208,4 +210,69 @@ The following default user accounts are available for testing:
   - Password: password
   - Role: manager
   - Permissions: Limited management permissions
-# erp-micro-services
+## Microservice Details
+
+### Authentication & User Management Service
+- **Directory**: `auth-service/`
+- **Description**: Handles user authentication, registration, and profile management.
+- **Features**:
+  - User registration and login
+  - Profile management
+  - Role and permission management
+  - Two-factor authentication
+  - API token management
+  - Password reset functionality
+  - Email verification
+  - API endpoints for other microservices
+  - Email notifications configuration with Mailtrap
+  - Custom theme implementation with dark/light mode toggle
+  - Guest layout implementation
+  - Custom landing page with sections (partners, team, blogs, insights)
+  - Contact, About, and Team pages
+  - Privacy Policy and Terms of Service pages
+  - Blog page
+  - Complete shadcn UI component library integration (40+ components)
+  - Update all forms and components to use shadcn UI components
+  - Replace traditional checkboxes with Switch components where appropriate
+  - Add breadcrumbs for improved navigation and user experience
+  - Role-based conditional navigation
+  - Multilingual support with i18next (English, Bemba, Nyanja, Tonga)
+  - Role-based dashboard with charts and visualizations for different user roles
+- **Tech Stack**: Laravel, Jetstream, Inertia.js, React, TypeScript, MySQL, ShadCN UI, i18next
+- **Status**: 100% Complete
+
+### CRM / Client Management Service
+- **Directory**: `crm-service/`
+- **Description**: Manages clients, leads, and communications.
+- **Features**:
+  - Client CRUD operations (Create, Read, Update, Delete)
+  - Client database migrations and model
+  - Client listing with pagination
+  - Client details view with tabs for communications and tasks
+  - Lead management functionality (Create, Read, Update, Delete)
+  - Lead database migrations and model
+  - Lead listing with pagination
+  - Lead details view with communications tab
+  - Lead to client conversion functionality
+  - Communication tracking for clients and leads
+  - Communication database migrations and model
+  - Communication creation and editing
+  - Communication listing in client and lead details
+  - Live chat functionality with WebSockets
+  - Chat database migrations and model
+  - Real-time messaging with Pusher
+  - Chat UI for clients and leads
+  - Proper error handling for WebSocket connections
+  - Graceful fallback when WebSocket services are unavailable
+  - Modern landing page with ShadCN UI components
+  - Toast notifications using sonner
+  - Independent authentication in each service
+  - Centralized user management
+  - ShadCN UI integration with 40+ components
+  - Dark/light mode toggle implementation
+  - Multilingual support with i18next (English, Bemba, Nyanja, Tonga)
+  - Breadcrumbs for improved navigation
+  - Role-based conditional navigation
+  - Mailtrap email configuration
+- **Tech Stack**: Laravel, Jetstream, Inertia.js, React, TypeScript, MySQL, ShadCN UI, i18next, Pusher
+- **Status**: 100% Complete

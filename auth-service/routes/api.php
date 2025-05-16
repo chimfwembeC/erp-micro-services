@@ -1,28 +1,11 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\SsoApiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-// Authentication routes for SSO
-Route::prefix('auth')->group(function () {
-    // Routes that require authentication
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/validate-token', [AuthController::class, 'validateToken']);
-        Route::get('/user', [AuthController::class, 'user']);
-    });
-
-    // Routes that don't require authentication
-    Route::get('/validate-token-direct', [AuthController::class, 'validateTokenDirect']);
-
-    // SSO login API endpoint (no CSRF protection)
-    Route::post('/sso-login', [SsoApiController::class, 'login']);
-});
 
 // User routes
 Route::middleware('auth:sanctum')->group(function () {

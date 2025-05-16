@@ -136,10 +136,11 @@ This document tracks the progress of tasks for the TekRem ERP system microservic
 - ✅ Graceful fallback when WebSocket services are unavailable
 - ✅ Modern landing page with ShadCN UI components
 - ✅ Toast notifications using sonner
-- ✅ Token-based authentication across microservices
+- ✅ Independent authentication in each service
 - ✅ Centralized user management
 - ✅ Fixed authentication configuration with proper APP_URL settings
 - ✅ Removed subdomain functionality across all services
+- ✅ Removed SSO functionality across all services
 - ✅ Fixed localization with correct language codes and directory structure
 
 ### In Progress

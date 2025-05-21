@@ -14,6 +14,7 @@ export interface User {
   id: number;
   name: string;
   email: string;
+  preferred_language?: string;
   current_team_id: Nullable<number>;
   profile_photo_path: Nullable<string>;
   profile_photo_url: string;
@@ -49,6 +50,17 @@ export type InertiaSharedProps<T = {}> = T & {
     hasEmailVerification: boolean;
   };
   auth: Auth;
+  locale?: {
+    current: string;
+    preferred: string | null;
+    available: {
+      [key: string]: {
+        name: string;
+        nativeName: string;
+        flag: string;
+      };
+    };
+  };
   errorBags: any;
   errors: any;
 };

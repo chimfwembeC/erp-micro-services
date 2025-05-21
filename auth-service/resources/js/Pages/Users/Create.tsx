@@ -3,6 +3,7 @@ import { Head, Link, router, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import { PageProps, AppRole, Permission } from '@/types';
 import useRoute from '@/Hooks/useRoute';
+import useTranslate from '@/Hooks/useTranslate';
 import {
   Card,
   CardContent,
@@ -33,6 +34,7 @@ export default function Create({
   canAssignDirectPermissions
 }: CreateUserProps) {
   const route = useRoute();
+  const { t } = useTranslate();
   const { data, setData, errors, processing } = useForm({
     name: '',
     email: '',
@@ -46,13 +48,13 @@ export default function Create({
     e.preventDefault();
     router.post(route('users.store'), data, {
       onSuccess: () => {
-        showSuccess('User created successfully', {
-          description: `User ${data.name} has been created.`
+        showSuccess(t('users.createSuccess', 'User created successfully'), {
+          description: t('users.createSuccessDescription', 'User {{name}} has been created.', { name: data.name })
         });
       },
       onError: () => {
-        showError('Failed to create user', {
-          description: 'Please check the form for errors.'
+        showError(t('users.createError', 'Failed to create user'), {
+          description: t('users.createErrorDescription', 'Please check the form for errors.')
         });
       }
     });
@@ -76,34 +78,34 @@ export default function Create({
 
   return (
     <AppLayout
-      title="Create User"
+      title={t('users.createUser', 'Create User')}
       renderHeader={() => (
         <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          Create User
+          {t('users.createUser', 'Create User')}
         </h2>
       )}
     >
-      <Head title="Create User" />
+      <Head title={t('users.createUser', 'Create User')} />
 
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="mb-6">
             <BreadcrumbWrapper
               items={[
-                { label: 'Users', href: route('users.index') },
-                { label: 'Create User' }
+                { label: t('common.users', 'Users'), href: route('users.index') },
+                { label: t('users.createUser', 'Create User') }
               ]}
             />
           </div>
           <Card>
             <CardHeader>
-              <CardTitle>Create New User</CardTitle>
-              <CardDescription>Add a new user to the system</CardDescription>
+              <CardTitle>{t('users.createNewUser', 'Create New User')}</CardTitle>
+              <CardDescription>{t('users.addNewUser', 'Add a new user to the system')}</CardDescription>
             </CardHeader>
             <form onSubmit={handleSubmit}>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
+                  <Label htmlFor="name">{t('common.name', 'Name')}</Label>
                   <Input
                     id="name"
                     value={data.name}
@@ -116,7 +118,7 @@ export default function Create({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t('users.email', 'Email')}</Label>
                   <Input
                     id="email"
                     type="email"
@@ -130,7 +132,7 @@ export default function Create({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{t('auth.resetPassword', 'Password')}</Label>
                   <Input
                     id="password"
                     type="password"
@@ -144,7 +146,7 @@ export default function Create({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="password_confirmation">Confirm Password</Label>
+                  <Label htmlFor="password_confirmation">{t('users.confirmPassword', 'Confirm Password')}</Label>
                   <Input
                     id="password_confirmation"
                     type="password"
@@ -156,7 +158,7 @@ export default function Create({
 
                 {canAssignRoles ? (
                   <div className="space-y-2">
-                    <Label>Roles</Label>
+                    <Label>{t('common.roles', 'Roles')}</Label>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {roles.map((role) => (
                         <div key={role.id} className="flex items-center space-x-2">
@@ -182,9 +184,9 @@ export default function Create({
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    <Label>Roles</Label>
+                    <Label>{t('common.roles', 'Roles')}</Label>
                     <p className="text-sm text-amber-600 dark:text-amber-400">
-                      You don't have permission to assign roles. The user will be assigned the default 'user' role.
+                      {t('users.noRolePermission', 'You don\'t have permission to assign roles. The user will be assigned the default \'user\' role.')}
                     </p>
                   </div>
                 )}
@@ -192,9 +194,9 @@ export default function Create({
                 {/* Direct Permissions Section */}
                 {canAssignDirectPermissions ? (
                   <div className="space-y-2">
-                    <Label>Direct Permissions</Label>
+                    <Label>{t('users.directPermissions', 'Direct Permissions')}</Label>
                     <p className="text-sm text-muted-foreground mb-2">
-                      These permissions are assigned directly to the user, regardless of their roles.
+                      {t('users.directPermissionsDescription', 'These permissions are assigned directly to the user, regardless of their roles.')}
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {permissions.map((permission) => (
@@ -221,18 +223,18 @@ export default function Create({
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    <Label>Direct Permissions</Label>
+                    <Label>{t('users.directPermissions', 'Direct Permissions')}</Label>
                     <p className="text-sm text-amber-600 dark:text-amber-400">
-                      You don't have permission to assign permissions directly to users.
+                      {t('users.noPermissionAssign', 'You don\'t have permission to assign permissions directly to users.')}
                     </p>
                   </div>
                 )}
               </CardContent>
               <CardFooter className="flex justify-between">
                 <Link href={route('users.index')}>
-                  <Button variant="outline" type="button">Cancel</Button>
+                  <Button variant="outline" type="button">{t('common.cancel', 'Cancel')}</Button>
                 </Link>
-                <Button type="submit" disabled={processing}>Create User</Button>
+                <Button type="submit" disabled={processing}>{t('users.createUser', 'Create User')}</Button>
               </CardFooter>
             </form>
           </Card>

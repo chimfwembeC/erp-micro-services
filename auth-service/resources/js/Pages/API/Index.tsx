@@ -2,6 +2,7 @@ import React from 'react';
 import APITokenManager from '@/Pages/API/Partials/APITokenManager';
 import AppLayout from '@/Layouts/AppLayout';
 import { ApiToken } from '@/types';
+import useTranslate from '@/Hooks/useTranslate';
 
 interface Props {
   tokens: ApiToken[];
@@ -14,12 +15,13 @@ export default function ApiTokenIndex({
   availablePermissions,
   defaultPermissions,
 }: Props) {
+  const { t } = useTranslate();
   return (
     <AppLayout
-      title={'API Tokens'}
+      title={t('common.apiTokens', 'API Tokens')}
       renderHeader={() => (
         <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-          API Tokens
+          {t('common.apiTokens', 'API Tokens')}
         </h2>
       )}
     >

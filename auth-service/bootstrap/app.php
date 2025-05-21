@@ -12,12 +12,21 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Add SetLocale middleware to the global middleware stack
+        $middleware->append(
+            \App\Http\Middleware\SetLocale::class
+        );
+
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
-        //
+        // Register middleware aliases
+        $middleware->alias([
+            'sso.auth' => \App\Http\Middleware\CheckSsoToken::class,
+            'locale' => \App\Http\Middleware\SetLocale::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

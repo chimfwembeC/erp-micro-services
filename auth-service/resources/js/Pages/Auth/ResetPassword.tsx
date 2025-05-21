@@ -1,6 +1,7 @@
 import { useForm, Head } from '@inertiajs/react';
 import React from 'react';
 import useRoute from '@/Hooks/useRoute';
+import useTranslate from '@/Hooks/useTranslate';
 import AuthenticationCard from '@/Components/AuthenticationCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +14,7 @@ interface Props {
 
 export default function ResetPassword({ token, email }: Props) {
   const route = useRoute();
+  const { t } = useTranslate();
   const form = useForm({
     token,
     email,
@@ -29,11 +31,11 @@ export default function ResetPassword({ token, email }: Props) {
 
   return (
     <AuthenticationCard>
-      <Head title="Reset Password" />
+      <Head title={t('auth.resetPassword')} />
 
       <form onSubmit={onSubmit} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('profile.email')}</Label>
           <Input
             id="email"
             type="email"
@@ -48,7 +50,7 @@ export default function ResetPassword({ token, email }: Props) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">{t('profile.confirmPassword')}</Label>
           <Input
             id="password"
             type="password"
@@ -63,7 +65,7 @@ export default function ResetPassword({ token, email }: Props) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password_confirmation">Confirm Password</Label>
+          <Label htmlFor="password_confirmation">{t('profile.confirmPassword')}</Label>
           <Input
             id="password_confirmation"
             type="password"
@@ -84,7 +86,7 @@ export default function ResetPassword({ token, email }: Props) {
             type="submit"
             disabled={form.processing}
           >
-            Reset Password
+            {t('auth.resetPassword')}
           </Button>
         </div>
       </form>

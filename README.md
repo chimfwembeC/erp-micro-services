@@ -7,7 +7,7 @@ This is a microservices-based ERP system for TekRem (Technology Remedies Innovat
 The system consists of the following microservices:
 
 1. **auth-service**: Authentication & User Management ✅
-2. **project-service**: Project & Task Management (with time logs)
+2. **project-service**: Project & Task Management (with time logs) 🔄
 3. **crm-service**: CRM / Client Management ✅
 4. **billing-service**: Billing & Invoicing
 5. **hr-service**: HR & Team Collaboration

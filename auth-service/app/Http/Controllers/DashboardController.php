@@ -37,11 +37,13 @@ class DashboardController extends Controller
             $adminData = $this->getAdminDashboardData();
             $managerData = $this->getManagerDashboardData($request);
             $userData = $this->getUserDashboardData();
+            $customerData = $this->getCustomerDashboardData();
 
             return response()->json([
                 'admin' => $adminData,
                 'manager' => $managerData,
                 'user' => $userData,
+                'customer' => $customerData,
             ]);
         } catch (\Exception $e) {
             Log::error('Error generating dashboard statistics: ' . $e->getMessage(), [
@@ -187,15 +189,19 @@ class DashboardController extends Controller
      */
     private function getRoleDistributionData()
     {
-        return Role::withCount('users')
-            ->get()
-            ->map(function ($role) {
-                return [
-                    'name' => $role->name,
-                    'value' => $role->users_count
-                ];
-            })
-            ->toArray();
+        $roles = Role::withCount('users')->get();
+        $totalUsers = User::count();
+
+        return $roles->map(function ($role) use ($totalUsers) {
+            $percentage = $totalUsers > 0 ? round(($role->users_count / $totalUsers) * 100, 1) : 0;
+
+            return [
+                'name' => $role->name,
+                'value' => $role->users_count,
+                'percentage' => $percentage,
+                'description' => $role->description
+            ];
+        })->toArray();
     }
 
     /**
@@ -227,12 +233,58 @@ class DashboardController extends Controller
      */
     private function getRolePermissionsData()
     {
-        return Role::with('permissions')
+        return Role::with(['permissions', 'users'])
+            ->withCount('users')
             ->get()
             ->map(function ($role) {
+                // Get the most recent users with this role (up to 5)
+                $recentUsers = $role->users->sortByDesc('created_at')->take(5)->map(function ($user) {
+                    return [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'created_at' => $user->created_at->format('Y-m-d')
+                    ];
+                })->values()->toArray();
+
+                // Group permissions by category (based on naming convention)
+                $permissionsByCategory = [];
+                foreach ($role->permissions as $permission) {
+                    $parts = explode('_', $permission->name);
+                    $category = count($parts) > 1 ? $parts[1] : 'other';
+
+                    if (!isset($permissionsByCategory[$category])) {
+                        $permissionsByCategory[$category] = [];
+                    }
+
+                    $permissionsByCategory[$category][] = [
+                        'id' => $permission->id,
+                        'name' => $permission->name,
+                        'description' => $permission->description
+                    ];
+                }
+
+                // For customer role, add placeholder for future service integrations
+                $externalServiceIntegrations = [];
+                if ($role->name === 'customer') {
+                    $externalServiceIntegrations = [
+                        'invoicing' => ['status' => 'pending', 'service' => 'Invoicing Service'],
+                        'orders' => ['status' => 'pending', 'service' => 'Order Management Service'],
+                        'tickets' => ['status' => 'pending', 'service' => 'Support Ticket Service']
+                    ];
+                }
+
                 return [
+                    'id' => $role->id,
                     'name' => $role->name,
-                    'permissions' => $role->permissions->pluck('name')->toArray()
+                    'description' => $role->description,
+                    'users_count' => $role->users_count,
+                    'permissions' => $role->permissions->pluck('name')->toArray(),
+                    'permissions_by_category' => $permissionsByCategory,
+                    'recent_users' => $recentUsers,
+                    'created_at' => $role->created_at ? $role->created_at->format('Y-m-d') : null,
+                    'updated_at' => $role->updated_at ? $role->updated_at->format('Y-m-d') : null,
+                    'external_service_integrations' => $externalServiceIntegrations
                 ];
             })
             ->toArray();
@@ -412,6 +464,162 @@ class DashboardController extends Controller
 
         return [
             'tasks' => $tasks,
+        ];
+    }
+
+    /**
+     * Get customer dashboard data
+     *
+     * @return array
+     */
+    private function getCustomerDashboardData()
+    {
+        // Get customer role
+        $customerRole = Role::where('name', 'customer')->first();
+
+        if (!$customerRole) {
+            return $this->getEmptyCustomerData();
+        }
+
+        // Get customer users count
+        $customersCount = $customerRole->users()->count();
+
+        // Get new customers (registered within the last 30 days)
+        $newCustomers = $customerRole->users()
+            ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->count();
+
+        // Get active customers (users who logged in within the last 7 days)
+        $activeCustomers = $customerRole->users()
+            ->where('updated_at', '>=', Carbon::now()->subDays(7))
+            ->count();
+
+        // Calculate percentage changes
+        $previousMonthCustomers = $customerRole->users()
+            ->where('created_at', '>=', Carbon::now()->subDays(60))
+            ->where('created_at', '<', Carbon::now()->subDays(30))
+            ->count();
+
+        $customerChangePercent = $previousMonthCustomers > 0
+            ? round((($newCustomers - $previousMonthCustomers) / $previousMonthCustomers) * 100, 0)
+            : 0;
+
+        // Get recent customers
+        $recentCustomers = $customerRole->users()
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get()
+            ->map(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'created_at' => $user->created_at->format('Y-m-d'),
+                    'verified' => $user->email_verified_at ? true : false
+                ];
+            })
+            ->toArray();
+
+        // Get customer permissions
+        $customerPermissions = $customerRole->permissions->map(function ($permission) {
+            return [
+                'id' => $permission->id,
+                'name' => $permission->name,
+                'description' => $permission->description
+            ];
+        })->toArray();
+
+        // Mock data for services that will be integrated later
+        $mockServices = [
+            [
+                'id' => 1,
+                'name' => 'Cloud Server Hosting',
+                'type' => 'Infrastructure',
+                'status' => 'Active',
+                'next_renewal' => Carbon::now()->addDays(30)->format('Y-m-d'),
+                'usage' => 78
+            ],
+            [
+                'id' => 2,
+                'name' => 'Database Management',
+                'type' => 'Database',
+                'status' => 'Active',
+                'next_renewal' => Carbon::now()->addDays(45)->format('Y-m-d'),
+                'usage' => 45
+            ],
+            [
+                'id' => 3,
+                'name' => 'Web Application Firewall',
+                'type' => 'Security',
+                'status' => 'Active',
+                'next_renewal' => Carbon::now()->addDays(15)->format('Y-m-d'),
+                'usage' => 92
+            ]
+        ];
+
+        // Mock data for future service integrations
+        $pendingIntegrations = [
+            'invoicing' => [
+                'status' => 'pending',
+                'service' => 'Invoicing Service',
+                'description' => 'Will provide customer invoice data'
+            ],
+            'orders' => [
+                'status' => 'pending',
+                'service' => 'Order Management Service',
+                'description' => 'Will provide customer order data'
+            ],
+            'tickets' => [
+                'status' => 'pending',
+                'service' => 'Support Ticket Service',
+                'description' => 'Will provide customer support ticket data'
+            ]
+        ];
+
+        return [
+            'summary' => [
+                'total_customers' => $customersCount,
+                'active_customers' => $activeCustomers,
+                'new_customers' => $newCustomers,
+                'customer_change_percent' => $customerChangePercent
+            ],
+            'recent_customers' => $recentCustomers,
+            'permissions' => $customerPermissions,
+            'services' => $mockServices,
+            'pending_integrations' => $pendingIntegrations,
+            'stats' => [
+                'active_services_count' => count($mockServices),
+                'pending_tickets_count' => 1,
+                'unpaid_invoices_count' => 2,
+                'upcoming_renewals_count' => 1
+            ]
+        ];
+    }
+
+    /**
+     * Get empty customer data structure
+     *
+     * @return array
+     */
+    private function getEmptyCustomerData()
+    {
+        return [
+            'summary' => [
+                'total_customers' => 0,
+                'active_customers' => 0,
+                'new_customers' => 0,
+                'customer_change_percent' => 0
+            ],
+            'recent_customers' => [],
+            'permissions' => [],
+            'services' => [],
+            'pending_integrations' => [],
+            'stats' => [
+                'active_services_count' => 0,
+                'pending_tickets_count' => 0,
+                'unpaid_invoices_count' => 0,
+                'upcoming_renewals_count' => 0
+            ]
         ];
     }
 }

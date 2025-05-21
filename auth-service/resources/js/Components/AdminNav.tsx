@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import usePermissions from '@/Hooks/usePermissions';
+import useTranslate from '@/Hooks/useTranslate';
 
 interface NavigationItem {
   name: string;
@@ -27,6 +28,7 @@ export default function AdminNav({
   navigationItems = []
 }: AdminNavProps) {
   const { isAdmin } = usePermissions();
+  const { t } = useTranslate();
 
   // Admin can view everything
   const userIsAdmin = isAdmin();

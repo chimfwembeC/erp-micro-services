@@ -15,6 +15,15 @@ export default defineConfig({
     alias: {
       '@': '/resources/js',
     },
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
+  },
+  server: {
+    hmr: {
+      overlay: true,
+    },
   },
   ssr: {
     noExternal: ['@inertiajs/server'],

@@ -6,7 +6,7 @@ export default function usePermissions() {
   const user = props.auth.user;
   const roles = user?.roles || [];
 
-  console.log('user',user?.roles);
+//   console.log('user',user?.roles);
   /**
    * Check if the user has the admin role
    */

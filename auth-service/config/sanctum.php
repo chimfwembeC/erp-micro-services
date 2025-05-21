@@ -17,7 +17,7 @@ return [
 
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
         '%s%s',
-        'localhost,localhost:3000,localhost:8000,localhost:8001,127.0.0.1,127.0.0.1:8000,127.0.0.1:8001,::1',
+        'localhost,localhost:3000,localhost:8000,localhost:8001,127.0.0.1,127.0.0.1:8000,127.0.0.1:8001,::1,auth.tekrem.local,crm.tekrem.local,erp.tekrem.local,*.tekrem.local',
         Sanctum::currentApplicationUrlWithPort(),
         // Sanctum::currentRequestHost(),
     ))),
@@ -47,7 +47,7 @@ return [
     |
     */
 
-    'expiration' => null,
+    'expiration' => env('SANCTUM_TOKEN_EXPIRATION', 1440), // 24 hours in minutes
 
     /*
     |--------------------------------------------------------------------------

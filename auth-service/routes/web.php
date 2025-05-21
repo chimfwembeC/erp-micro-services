@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthCallbackController;
+use App\Http\Controllers\Auth\CrmLoginController;
 use App\Http\Controllers\Auth\CustomLoginController;
 use App\Http\Controllers\Auth\CustomVerifyEmailController;
+use App\Http\Controllers\Auth\RedirectController;
 use App\Http\Controllers\Auth\SimpleRegisterController;
+use App\Http\Controllers\Auth\SsoController;
+use App\Http\Controllers\AuditController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -24,23 +29,54 @@ Route::get('/', function () {
 })->name('welcome');
 
 // Custom login route to handle redirect parameter
-Route::get('/login', [CustomLoginController::class, 'showLoginForm'])
+// Route::get('/login', [CustomLoginController::class, 'showLoginForm'])
+//     ->middleware(['guest'])
+//     ->name('login');
+
+// CRM-specific login route
+Route::get('/auth/login', [CrmLoginController::class, 'showLoginForm'])
     ->middleware(['guest'])
-    ->name('login');
+    ->name('crm.login');
 
+// SSO routes
+Route::prefix('sso')->group(function () {
+    // SSO login route
+    Route::post('/login', [SsoController::class, 'login'])
+        ->middleware(['web'])
+        ->name('sso.login');
 
+    // SSO logout route
+    Route::post('/logout', [SsoController::class, 'logout'])
+        ->middleware(['auth:sanctum'])
+        ->name('sso.logout');
+});
+
+// Auth callback route to handle SSO from auth service
+Route::get('/auth/callback', [AuthCallbackController::class, 'handleCallback'])
+    ->name('auth.callback');
 
 // Guest pages
 Route::get('/about', function () {
     return Inertia::render('About');
 })->name('about');
 
+Route::get('/services', function () {
+    return Inertia::render('Services');
+})->name('services');
+
+Route::get('/portfolio', function () {
+    return Inertia::render('Portfolio');
+})->name('portfolio');
+
 Route::get('/team', function () {
     return Inertia::render('Team');
 })->name('team');
 
 Route::get('/contact', function () {
-    return Inertia::render('Contact');
+    $service = request()->query('service');
+    return Inertia::render('Contact', [
+        'service' => $service
+    ]);
 })->name('contact');
 
 Route::get('/blog', function () {
@@ -135,15 +171,59 @@ if (Features::enabled(Features::emailVerification())) {
         ->name('verification.send');
 }
 
-
+// Direct redirect to CRM service
+Route::get('/redirect-to-crm', [RedirectController::class, 'redirectToCrm'])
+    ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
+    ->name('redirect.crm');
 
 Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
+    'sso.auth',
 ])->group(function () {
     Route::get('/dashboard', function () {
+        // Check if there's a redirect parameter in the session
+        $redirect = session('redirect_after_login');
 
+        // Log the redirect parameter for debugging
+        \Illuminate\Support\Facades\Log::info('Dashboard accessed', [
+            'redirect_param' => $redirect,
+            'has_from_crm' => request()->has('from_crm'),
+            'session_data' => session()->all(),
+            'request_url' => request()->fullUrl(),
+            'request_query' => request()->query(),
+        ]);
+
+        // Check if the user is coming from the CRM service or has a redirect parameter
+        if (request()->has('from_crm') || $redirect) {
+            return redirect()->route('redirect.crm');
+        }
+
+        // Check if there's a redirect query parameter
+        if (request()->has('redirect')) {
+            $redirectUrl = request()->input('redirect');
+
+            // Check if the redirect URL is for the CRM dashboard directly
+            $crmDashboardUrl = env('CRM_SERVICE_URL', 'http://localhost:8001') . '/dashboard';
+            $isCrmDashboardRedirect = $redirectUrl === $crmDashboardUrl;
+
+            // If it's a direct dashboard redirect, use the callback URL instead
+            if ($isCrmDashboardRedirect) {
+                // Store the original dashboard URL as the intended destination after auth
+                session(['crm_intended_url' => $crmDashboardUrl]);
+
+                // Use the callback URL instead
+                $redirectUrl = env('CRM_SERVICE_URL', 'http://localhost:8001') . '/auth/callback';
+
+                \Illuminate\Support\Facades\Log::info('Dashboard: Redirecting to CRM callback instead of dashboard directly', [
+                    'original_redirect' => $crmDashboardUrl,
+                    'new_redirect' => $redirectUrl,
+                    'intended_url_stored' => session('crm_intended_url')
+                ]);
+            }
+
+            // Store the redirect parameter in the session
+            session(['redirect_after_login' => $redirectUrl]);
+            return redirect()->route('redirect.crm');
+        }
 
         return Inertia::render('Dashboard');
     })->name('dashboard');
@@ -181,4 +261,15 @@ Route::middleware([
     Route::get('/examples/permission-error-handling', function () {
         return Inertia::render('Examples/PermissionErrorHandling');
     })->name('examples.permission-error-handling');
+
+    // Audit routes
+    Route::get('/audits', [AuditController::class, 'index'])
+        ->name('audits.index')
+        ->middleware('can:view_audit_logs');
+    Route::get('/audits/export', [AuditController::class, 'export'])
+        ->name('audits.export')
+        ->middleware('can:export_audit_logs');
+    Route::get('/audits/{audit}', [AuditController::class, 'show'])
+        ->name('audits.show')
+        ->middleware('can:view_audit_logs');
 });

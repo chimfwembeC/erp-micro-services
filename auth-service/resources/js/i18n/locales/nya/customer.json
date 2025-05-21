@@ -1,0 +1,62 @@
+{
+  "dashboard": {
+    "customer": {
+      "overview": "Maonekedwe",
+      "services": "Ntchito za Teknoloji",
+      "billing": "Malipiro ndi Makalata a Ntchito",
+      "support": "Thandizo",
+      "activeServices": "Ntchito Zogwira",
+      "currentlyActive": "Ntchito zomwe zikugwira ntchito panopa",
+      "pendingTickets": "Makalata Odikira",
+      "openSupportRequests": "Zopempha thandizo zotseguka",
+      "unpaidInvoices": "Makalata Osalipidwa",
+      "pendingPayments": "Malipiro odikira",
+      "upcomingRenewals": "Kukonzanso Kukubwera",
+      "next30Days": "M'masiku 30 otsatira",
+      "recentOrders": "Maoda Atsopano",
+      "latestPurchases": "Zogula zanu zaposachedwa",
+      "orderID": "Nambala ya Oda",
+      "date": "Tsiku",
+      "status": "Mkhalidwe",
+      "viewAllOrders": "Onani Maoda Onse",
+      "recentTickets": "Makalata Atsopano",
+      "latestSupportRequests": "Zopempha thandizo zanu zaposachedwa",
+      "ticketID": "Nambala ya Kalata",
+      "subject": "Mutu",
+      "viewAllTickets": "Onani Makalata Onse",
+      "technologyServices": "Ntchito za Teknoloji",
+      "managedServices": "Ntchito zanu za teknoloji zoyendetsedwa",
+      "nextRenewal": "Kukonzanso Kotsatira",
+      "resourceUsage": "Kugwiritsa Ntchito Zinthu",
+      "manageService": "Yanganira Ntchito",
+      "orderNewService": "Pemphani Ntchito Yatsopano",
+      "invoices": "Makalata a Ntchito",
+      "billingHistory": "Mbiri yanu ya malipiro",
+      "invoiceID": "Nambala ya Kalata",
+      "dueDate": "Tsiku Lomaliza",
+      "amount": "Ndalama",
+      "actions": "Zochita",
+      "view": "Onani",
+      "pay": "Lipirani Tsopano",
+      "supportTickets": "Makalata a Thandizo",
+      "helpRequests": "Zopempha thandizo zanu",
+      "priority": "Kufunika",
+      "viewTicket": "Onani Kalata",
+      "createNewTicket": "Pangani Kalata Latsopano"
+    }
+  },
+  "common": {
+    "customer": "Wogula",
+    "tekremTech": "Tekrem Ntchito za Teknoloji"
+  },
+  "customer": {
+    "orders": "Maoda",
+    "viewOrders": "Onani maoda",
+    "invoices": "Makalata a Ntchito",
+    "viewInvoices": "Onani makalata a ntchito",
+    "support": "Thandizo",
+    "viewTickets": "Onani makalata",
+    "newTicket": "Kalata Latsopano",
+    "createTicket": "Pangani kalata"
+  }
+}

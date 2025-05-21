@@ -3,6 +3,7 @@ import { Head, Link, router, useForm } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import { PageProps, Permission } from '@/types';
 import useRoute from '@/Hooks/useRoute';
+import useTranslate from '@/Hooks/useTranslate';
 import {
   Card,
   CardContent,
@@ -25,6 +26,7 @@ interface CreateRoleProps extends PageProps {
 
 export default function Create({ permissions }: CreateRoleProps) {
   const route = useRoute();
+  const { t } = useTranslate();
   const { data, setData, errors, processing } = useForm({
     name: '',
     description: '',
@@ -35,13 +37,13 @@ export default function Create({ permissions }: CreateRoleProps) {
     e.preventDefault();
     router.post(route('roles.store'), data, {
       onSuccess: () => {
-        showSuccess('Role created successfully', {
-          description: `Role ${data.name} has been created.`
+        showSuccess(t('roles.createSuccess', 'Role created successfully'), {
+          description: t('roles.createSuccessDescription', 'Role {{name}} has been created.', { name: data.name })
         });
       },
       onError: () => {
-        showError('Failed to create role', {
-          description: 'Please check the form for errors.'
+        showError(t('roles.createError', 'Failed to create role'), {
+          description: t('roles.createErrorDescription', 'Please check the form for errors.')
         });
       }
     });
@@ -67,34 +69,34 @@ export default function Create({ permissions }: CreateRoleProps) {
 
   return (
     <AppLayout
-      title="Create Role"
+      title={t('roles.createRole', 'Create Role')}
       renderHeader={() => (
         <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          Create Role
+          {t('roles.createRole', 'Create Role')}
         </h2>
       )}
     >
-      <Head title="Create Role" />
+      <Head title={t('roles.createRole', 'Create Role')} />
 
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="mb-6">
             <BreadcrumbWrapper
               items={[
-                { label: 'Roles', href: route('roles.index') },
-                { label: 'Create Role' }
+                { label: t('roles.title', 'Roles'), href: route('roles.index') },
+                { label: t('roles.createRole', 'Create Role') }
               ]}
             />
           </div>
           <Card>
             <CardHeader>
-              <CardTitle>Create New Role</CardTitle>
-              <CardDescription>Add a new role to the system</CardDescription>
+              <CardTitle>{t('roles.createNewRole', 'Create New Role')}</CardTitle>
+              <CardDescription>{t('roles.addNewRole', 'Add a new role to the system')}</CardDescription>
             </CardHeader>
             <form onSubmit={handleSubmit}>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
+                  <Label htmlFor="name">{t('common.name', 'Name')}</Label>
                   <Input
                     id="name"
                     value={data.name}
@@ -107,7 +109,7 @@ export default function Create({ permissions }: CreateRoleProps) {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
+                  <Label htmlFor="description">{t('common.description', 'Description')}</Label>
                   <Textarea
                     id="description"
                     value={data.description}
@@ -120,11 +122,11 @@ export default function Create({ permissions }: CreateRoleProps) {
                 </div>
 
                 <div className="space-y-4">
-                  <Label>Permissions</Label>
+                  <Label>{t('permissions.title', 'Permissions')}</Label>
 
                   {Object.entries(groupedPermissions).map(([group, groupPermissions]) => (
                     <div key={group} className="space-y-2">
-                      <h3 className="text-md font-medium capitalize">{group} Permissions</h3>
+                      <h3 className="text-md font-medium capitalize">{t(`permissions.group.${group}`, `${group} Permissions`)}</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {groupPermissions.map((permission) => (
                           <div key={permission.id} className="flex items-center space-x-2">
@@ -154,9 +156,9 @@ export default function Create({ permissions }: CreateRoleProps) {
               </CardContent>
               <CardFooter className="flex justify-between">
                 <Link href={route('roles.index')}>
-                  <Button variant="outline" type="button">Cancel</Button>
+                  <Button variant="outline" type="button">{t('common.cancel', 'Cancel')}</Button>
                 </Link>
-                <Button type="submit" disabled={processing}>Create Role</Button>
+                <Button type="submit" disabled={processing}>{t('roles.createRole', 'Create Role')}</Button>
               </CardFooter>
             </form>
           </Card>

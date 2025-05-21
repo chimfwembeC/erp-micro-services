@@ -11,10 +11,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, Auditable
 {
     use HasApiTokens;
+    use AuditableTrait;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
@@ -31,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'preferred_language',
     ];
 
     /**

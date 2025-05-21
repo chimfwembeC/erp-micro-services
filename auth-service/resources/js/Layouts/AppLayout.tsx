@@ -8,6 +8,7 @@ import usePermissions from '@/Hooks/usePermissions';
 import ApplicationMark from '@/Components/ApplicationMark';
 import Banner from '@/Components/Banner';
 import AdminNav from '@/Components/AdminNav';
+import CustomerNavigationMenu from '@/Components/Navigation/CustomerNavigationMenu';
 import { Toaster } from '@/components/ui/sonner';
 import { Team } from '@/types';
 import { ModeToggle } from '@/Components/ModeToggle';
@@ -41,7 +42,8 @@ import {
   Users,
   ShieldCheck,
   Lock,
-  LayoutDashboard
+  LayoutDashboard,
+  History
 } from 'lucide-react';
 
 interface Props {
@@ -97,18 +99,38 @@ export default function AppLayout({
       icon: Lock,
       active: route().current('permissions.*'),
       permission: 'view_permissions'
+    },
+    {
+      name: t('audit.auditLogs'),
+      href: route('audits.index'),
+      icon: History,
+      active: route().current('audits.*'),
+      permission: 'view_audit_logs'
     }
   ];
 
   // Check if user is admin (admins can access everything)
   const userIsAdmin = isAdmin();
 
-  console.log('userIsAdmin', userIsAdmin);
+  // Check if user is a customer
+  const userIsCustomer = hasRole('customer');
+
+//   console.log('userIsAdmin', userIsAdmin);
+//   console.log('userIsCustomer', userIsCustomer);
+
   // Check permissions for admin section
   const canViewUsers = userIsAdmin || hasPermission('view_users');
   const canViewRoles = userIsAdmin || hasPermission('view_roles');
   const canViewPermissions = userIsAdmin || hasPermission('view_permissions');
-  const canAccessAdminSection = canViewUsers || canViewRoles || canViewPermissions;
+  const canViewAuditLogs = userIsAdmin || hasPermission('view_audit_logs');
+  const canAccessAdminSection = canViewUsers || canViewRoles || canViewPermissions || canViewAuditLogs;
+
+  // Check permissions for customer section
+  const canViewOrders = userIsAdmin || hasPermission('view_orders');
+  const canCreateOrders = userIsAdmin || hasPermission('create_orders');
+  const canViewInvoices = userIsAdmin || hasPermission('view_invoices');
+  const canViewSupportTickets = userIsAdmin || hasPermission('view_support_tickets');
+  const canAccessCustomerSection = userIsCustomer || canViewOrders || canCreateOrders || canViewInvoices || canViewSupportTickets;
 
   // Filter navigation items based on permissions
   const authorizedNavItems = navigationItems.filter(item =>
@@ -146,6 +168,10 @@ export default function AppLayout({
               {/* Logo */}
               <Link href={route('dashboard')} className="flex items-center space-x-2">
                 <ApplicationMark className="h-9 w-auto" />
+                <div className="hidden md:flex flex-col">
+                  <span className="font-bold text-lg">{t('common.tekremTech')}</span>
+                  <span className="text-xs text-muted-foreground">Technology Solutions Provider</span>
+                </div>
               </Link>
 
               {/* Desktop Navigation */}
@@ -170,7 +196,8 @@ export default function AppLayout({
                             item.permission !== null &&
                             (item.permission === 'view_users' ||
                              item.permission === 'view_roles' ||
-                             item.permission === 'view_permissions') &&
+                             item.permission === 'view_permissions' ||
+                             item.permission === 'view_audit_logs') &&
                             (hasPermission(item.permission) || userIsAdmin)
                           ).map((item, index) => (
                             <Link
@@ -186,12 +213,21 @@ export default function AppLayout({
                                 {item.permission === 'view_users' && t('users.manageUserAccounts')}
                                 {item.permission === 'view_roles' && t('roles.configureUserRoles')}
                                 {item.permission === 'view_permissions' && t('permissions.defineGranularPermissions')}
+                                {item.permission === 'view_audit_logs' && t('audit.description')}
                               </p>
                             </Link>
                           ))}
                         </div>
                       </NavigationMenuContent>
                     </NavigationMenuItem>
+                  )}
+
+                  {/* Customer section with conditional rendering */}
+                  {canAccessCustomerSection && (
+                    <CustomerNavigationMenu
+                      t={t}
+                      hasPermission={hasPermission}
+                    />
                   )}
                 </NavigationMenuList>
               </NavigationMenu>

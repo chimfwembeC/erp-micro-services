@@ -2,6 +2,7 @@ import { Link, useForm, Head } from '@inertiajs/react';
 import React from 'react';
 import useRoute from '@/Hooks/useRoute';
 import useTypedPage from '@/Hooks/useTypedPage';
+import useTranslate from '@/Hooks/useTranslate';
 import AuthenticationCard from '@/Components/AuthenticationCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +12,7 @@ import { Switch } from '@/components/ui/switch';
 export default function Register() {
   const page = useTypedPage();
   const route = useRoute();
+  const { t } = useTranslate();
   const form = useForm({
     name: '',
     email: '',
@@ -28,11 +30,11 @@ export default function Register() {
 
   return (
     <AuthenticationCard>
-      <Head title="Register" />
+      <Head title={t('auth.register')} />
 
       <form onSubmit={onSubmit} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="name">Name</Label>
+          <Label htmlFor="name">{t('profile.name')}</Label>
           <Input
             id="name"
             type="text"
@@ -48,7 +50,7 @@ export default function Register() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('profile.email')}</Label>
           <Input
             id="email"
             type="email"
@@ -62,7 +64,7 @@ export default function Register() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">{t('profile.confirmPassword')}</Label>
           <Input
             id="password"
             type="password"
@@ -77,7 +79,7 @@ export default function Register() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password_confirmation">Confirm Password</Label>
+          <Label htmlFor="password_confirmation">{t('profile.confirmPassword')}</Label>
           <Input
             id="password_confirmation"
             type="password"
@@ -132,14 +134,14 @@ export default function Register() {
             href={route('login')}
             className="text-sm text-primary hover:underline"
           >
-            Already registered?
+            {t('auth.alreadyRegistered')}
           </Link>
 
           <Button
             type="submit"
             disabled={form.processing}
           >
-            Register
+            {t('auth.register')}
           </Button>
         </div>
       </form>

@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 import React from 'react';
 import useRoute from '@/Hooks/useRoute';
 import useTypedPage from '@/Hooks/useTypedPage';
+import useTranslate from '@/Hooks/useTranslate';
 import { Head } from '@inertiajs/react';
 import {
   BellRing,
@@ -28,10 +29,11 @@ export default function Welcome({
 }: Props) {
   const route = useRoute();
   const page = useTypedPage();
+  const { t } = useTranslate();
 
   return (
     <>
-      <Head title="Welcome" />
+      <Head title={t('welcome.pageTitle', 'Welcome')} />
 
       <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         {canLogin ? (
@@ -41,7 +43,7 @@ export default function Welcome({
                 href={route('dashboard')}
                 className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
               >
-                Dashboard
+                {t('common.dashboard', 'Dashboard')}
               </Link>
             ) : (
               <>
@@ -49,7 +51,7 @@ export default function Welcome({
                   href={route('login')}
                   className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                 >
-                  Log in
+                  {t('auth.login', 'Log in')}
                 </Link>
 
                 {canRegister ? (
@@ -57,7 +59,7 @@ export default function Welcome({
                     href={route('register')}
                     className="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                   >
-                    Register
+                    {t('auth.register', 'Register')}
                   </Link>
                 ) : null}
               </>
@@ -90,13 +92,11 @@ export default function Welcome({
                   </div>
 
                   <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                    Breadcrumb Navigation
+                    {t('welcome.features.breadcrumbs.title', 'Breadcrumb Navigation')}
                   </h2>
 
                   <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                    Enhanced user experience with intuitive breadcrumb navigation throughout the application.
-                    Easily track your location and navigate back to previous pages with our clean,
-                    responsive breadcrumb implementation using ShadCN UI components.
+                    {t('welcome.features.breadcrumbs.description', 'Enhanced user experience with intuitive breadcrumb navigation throughout the application. Easily track your location and navigate back to previous pages with our clean, responsive breadcrumb implementation using ShadCN UI components.')}
                   </p>
                 </div>
               </div>
@@ -109,13 +109,11 @@ export default function Welcome({
                   </div>
 
                   <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                    Sonner Notifications
+                    {t('welcome.features.notifications.title', 'Sonner Notifications')}
                   </h2>
 
                   <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                    Receive immediate feedback with elegant toast notifications for all actions.
-                    Our implementation uses Sonner for beautiful, accessible notifications that
-                    provide clear feedback for form submissions, CRUD operations, and system events.
+                    {t('welcome.features.notifications.description', 'Receive immediate feedback with elegant toast notifications for all actions. Our implementation uses Sonner for beautiful, accessible notifications that provide clear feedback for form submissions, CRUD operations, and system events.')}
                   </p>
                 </div>
               </div>
@@ -131,14 +129,11 @@ export default function Welcome({
                   </div>
 
                   <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                    Dark/Light Theme
+                    {t('welcome.features.theme.title', 'Dark/Light Theme')}
                   </h2>
 
                   <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                    Customize your experience with our seamless dark and light mode toggle.
-                    The theme system respects your system preferences by default but allows
-                    you to override them with a simple click, providing optimal viewing comfort
-                    in any environment.
+                    {t('welcome.features.theme.description', 'Customize your experience with our seamless dark and light mode toggle. The theme system respects your system preferences by default but allows you to override them with a simple click, providing optimal viewing comfort in any environment.')}
                   </p>
                 </div>
               </div>
@@ -151,14 +146,11 @@ export default function Welcome({
                   </div>
 
                   <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                    Live Chat (Coming Soon)
+                    {t('welcome.features.chat.title', 'Live Chat (Coming Soon)')}
                   </h2>
 
                   <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                    Real-time communication with WebSockets-powered live chat functionality.
-                    Connect instantly with support staff or team members through our
-                    responsive chat interface, coming soon to the CRM service and available
-                    for integration across all microservices.
+                    {t('welcome.features.chat.description', 'Real-time communication with WebSockets-powered live chat functionality. Connect instantly with support staff or team members through our responsive chat interface, coming soon to the CRM service and available for integration across all microservices.')}
                   </p>
                 </div>
               </div>
@@ -171,14 +163,11 @@ export default function Welcome({
                   </div>
 
                   <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                    Multilingual Support
+                    {t('welcome.features.multilingual.title', 'Multilingual Support')}
                   </h2>
 
                   <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                    Reach a wider audience with our comprehensive multilingual support.
-                    The application is fully localized with i18next, supporting English
-                    and Zambian languages (Bemba, Nyanja, Tonga) with an easy language
-                    switcher in the navigation bar.
+                    {t('welcome.features.multilingual.description', 'Reach a wider audience with our comprehensive multilingual support. The application is fully localized with i18next, supporting English and Zambian languages (Bemba, Nyanja, Tonga) with an easy language switcher in the navigation bar.')}
                   </p>
                 </div>
               </div>
@@ -191,14 +180,11 @@ export default function Welcome({
                   </div>
 
                   <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                    Role-Based Dashboard
+                    {t('welcome.features.dashboard.title', 'Role-Based Dashboard')}
                   </h2>
 
                   <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                    Experience personalized dashboards tailored to your role in the organization.
-                    Administrators see system-wide metrics, managers view team performance data,
-                    and regular users get personalized task information and activity metrics,
-                    all with beautiful Recharts visualizations.
+                    {t('welcome.features.dashboard.description', 'Experience personalized dashboards tailored to your role in the organization. Administrators see system-wide metrics, managers view team performance data, and regular users get personalized task information and activity metrics, all with beautiful Recharts visualizations.')}
                   </p>
                 </div>
               </div>
@@ -209,13 +195,13 @@ export default function Welcome({
             <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">
               <div className="flex items-center gap-4">
                 <span>
-                  TekRem Microservices Ecosystem
+                  {t('welcome.footer.ecosystem', 'TekRem Microservices Ecosystem')}
                 </span>
               </div>
             </div>
 
             <div className="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-              Laravel v{laravelVersion} (PHP v{phpVersion}) | React + TypeScript | ShadCN UI
+              {t('welcome.footer.techStack', 'Laravel v{{laravelVersion}} (PHP v{{phpVersion}}) | React + TypeScript | ShadCN UI', { laravelVersion, phpVersion })}
             </div>
           </div>
         </div>

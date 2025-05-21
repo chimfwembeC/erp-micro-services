@@ -32,6 +32,8 @@ interface UserActivity {
 interface RoleDistribution {
   name: string;
   value: number;
+  percentage: number;
+  description: string;
 }
 
 interface RecentUser {
@@ -41,9 +43,36 @@ interface RecentUser {
   created_at: string;
 }
 
-interface RolePermission {
+interface Permission {
+  id: number;
   name: string;
+  description: string;
+}
+
+interface RecentRoleUser {
+  id: number;
+  name: string;
+  email: string;
+  created_at: string;
+}
+
+interface ServiceIntegration {
+  status: string;
+  service: string;
+  description?: string;
+}
+
+interface RolePermission {
+  id: number;
+  name: string;
+  description: string;
+  users_count: number;
   permissions: string[];
+  permissions_by_category: Record<string, Permission[]>;
+  recent_users: RecentRoleUser[];
+  created_at: string | null;
+  updated_at: string | null;
+  external_service_integrations: Record<string, ServiceIntegration>;
 }
 
 // Admin Dashboard Component
@@ -272,28 +301,185 @@ export default function AdminDashboard({ user, data, isLoading = false, error = 
 
         {/* Roles Tab */}
         <TabsContent value="roles" className="space-y-6 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-2xl">{t('dashboard.admin.totalRoles', 'Total Roles')}</CardTitle>
+                <CardDescription>{t('dashboard.admin.definedRoles', 'Defined roles in the system')}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-4xl font-bold">{data.role_permissions.length}</div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-2xl">{t('dashboard.admin.mostPopularRole', 'Most Popular Role')}</CardTitle>
+                <CardDescription>{t('dashboard.admin.highestUserCount', 'Role with highest user count')}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {data.role_permissions.length > 0 ? (
+                  <>
+                    <div className="text-2xl font-bold">
+                      {data.role_permissions.reduce((prev, current) =>
+                        (prev.users_count > current.users_count) ? prev : current
+                      ).name}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {data.role_permissions.reduce((prev, current) =>
+                        (prev.users_count > current.users_count) ? prev : current
+                      ).users_count} {t('dashboard.admin.users', 'Users')}
+                    </p>
+                  </>
+                ) : (
+                  <div className="text-muted-foreground">No roles defined</div>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-2xl">{t('dashboard.admin.customerRole', 'Customer Role')}</CardTitle>
+                <CardDescription>{t('dashboard.admin.customerRoleStats', 'Customer role statistics')}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {data.role_permissions.find(role => role.name === 'customer') ? (
+                  <>
+                    <div className="text-2xl font-bold">
+                      {data.role_permissions.find(role => role.name === 'customer')?.users_count || 0}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {t('dashboard.admin.registeredCustomers', 'Registered customers')}
+                    </p>
+                  </>
+                ) : (
+                  <div className="text-muted-foreground">Customer role not defined</div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
           <Card>
             <CardHeader>
-              <CardTitle>{t('dashboard.admin.rolePermissions', 'Role Permissions')}</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <PieChartIcon className="h-5 w-5" />
+                {t('dashboard.admin.roleDistribution', 'Role Distribution')}
+              </CardTitle>
+              <CardDescription>{t('dashboard.admin.usersByRole', 'Users by role')}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={data.role_distribution}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, percentage }) => `${name}: ${percentage}%`}
+                      outerRadius={80}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {data.role_distribution.map((_, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value, name, props) => [`${value} users (${props.payload.percentage}%)`, name]} />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{t('dashboard.admin.roleDetails', 'Role Details')}</CardTitle>
               <CardDescription>{t('dashboard.admin.roleOverview', 'Overview of roles and their permissions')}</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {data.role_permissions.map((role, index) => (
-                  <div key={index} className="space-y-2">
-                    <h3 className="text-lg font-medium">{role.name}</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {role.permissions.map((permission, i) => (
-                        <div key={i} className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs">{permission}</div>
-                      ))}
-                      {role.permissions.length === 0 && (
-                        <div className="text-muted-foreground text-sm">No permissions assigned</div>
-                      )}
+                  <div key={index} className="space-y-4 pb-6 border-b last:border-0">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h3 className="text-xl font-medium">{role.name}</h3>
+                        <p className="text-muted-foreground">{role.description || t('dashboard.admin.noDescription', 'No description provided')}</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-lg font-semibold">{role.users_count}</div>
+                        <p className="text-xs text-muted-foreground">{t('dashboard.admin.users', 'Users')}</p>
+                      </div>
                     </div>
+
+                    <div>
+                      <h4 className="text-sm font-medium mb-2">{t('dashboard.admin.permissions', 'Permissions')}</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {Object.entries(role.permissions_by_category || {}).map(([category, permissions]) => (
+                          <div key={category} className="space-y-2">
+                            <h5 className="text-sm font-medium capitalize">{category}</h5>
+                            <div className="flex flex-wrap gap-2">
+                              {permissions.map((permission, i) => (
+                                <div key={i} className="bg-primary/10 text-primary rounded-full px-2 py-1 text-xs" title={permission.description}>
+                                  {permission.name}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+
+                        {Object.keys(role.permissions_by_category || {}).length === 0 && (
+                          <div className="text-muted-foreground text-sm col-span-3">{t('dashboard.admin.noPermissions', 'No permissions assigned')}</div>
+                        )}
+                      </div>
+                    </div>
+
+                    {role.name === 'customer' && role.external_service_integrations && (
+                      <div>
+                        <h4 className="text-sm font-medium mb-2">{t('dashboard.admin.serviceIntegrations', 'Service Integrations')}</h4>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          {Object.entries(role.external_service_integrations).map(([key, integration]) => (
+                            <div key={key} className="border rounded-lg p-3">
+                              <div className="flex items-center justify-between">
+                                <h5 className="font-medium capitalize">{key}</h5>
+                                <span className="text-xs bg-yellow-100 text-yellow-800 rounded-full px-2 py-0.5">
+                                  {integration.status}
+                                </span>
+                              </div>
+                              <p className="text-sm text-muted-foreground mt-1">{integration.service}</p>
+                              {integration.description && (
+                                <p className="text-xs text-muted-foreground mt-2">{integration.description}</p>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {role.recent_users && role.recent_users.length > 0 && (
+                      <div>
+                        <h4 className="text-sm font-medium mb-2">{t('dashboard.admin.recentUsers', 'Recent Users')}</h4>
+                        <div className="grid grid-cols-3 text-sm font-medium mb-1">
+                          <div>{t('users.name', 'Name')}</div>
+                          <div>{t('users.email', 'Email')}</div>
+                          <div>{t('users.createdAt', 'Created At')}</div>
+                        </div>
+                        <div className="space-y-1">
+                          {role.recent_users.slice(0, 3).map((user, i) => (
+                            <div key={i} className="grid grid-cols-3 text-sm py-1">
+                              <div>{user.name}</div>
+                              <div className="text-muted-foreground">{user.email}</div>
+                              <div className="text-muted-foreground">{user.created_at}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
-              <div className="mt-4">
+              <div className="mt-6">
                 <Button variant="outline" asChild>
                   <a href="/roles">{t('dashboard.admin.manageRoles', 'Manage Roles')}</a>
                 </Button>

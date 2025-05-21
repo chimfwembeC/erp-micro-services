@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
         // Seed roles and permissions
         $this->call(RolesAndPermissionsSeeder::class);
 
+        // Seed services for service-to-service authentication
+        $this->call(ServicesSeeder::class);
+
         // Create admin user
         $admin = User::factory()->create([
             'name' => 'Admin User',
@@ -40,7 +43,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@tekrem.com',
         ]);
 
+
         // Assign user role to regular user
         $user->roles()->attach(\App\Models\Role::where('name', 'user')->first());
+
+        $customer = User::factory()->create([
+            'name' => 'Customer User',
+            'email' => 'customer@tekrem.com',
+        ]);
+
+        // Assign user role to regular user
+        $customer->roles()->attach(\App\Models\Role::where('name', 'customer')->first());
+
     }
 }

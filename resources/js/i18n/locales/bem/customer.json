@@ -1,0 +1,62 @@
+{
+  "dashboard": {
+    "customer": {
+      "overview": "Ifyonse",
+      "services": "Imilimo ya Teknoloji",
+      "billing": "Amalipilo na Amakalata ya Mulimo",
+      "support": "Ubwafwilisho",
+      "activeServices": "Imilimo Ilebomba",
+      "currentlyActive": "Imilimo ilebomba nomba",
+      "pendingTickets": "Amakalata Yalelolela",
+      "openSupportRequests": "Ifipusho fya bwafwilisho ifyaisulwa",
+      "unpaidInvoices": "Amakalata Yashalipilwe",
+      "pendingPayments": "Amalipilo yalelolela",
+      "upcomingRenewals": "Ukupilibula Kuleisa",
+      "next30Days": "Mu nshiku 30 shileisa",
+      "recentOrders": "Ifyakulomba Ifipya",
+      "latestPurchases": "Ifyo mwashitile nomba nomba",
+      "orderID": "Inambala ya Kulomba",
+      "date": "Ubushiku",
+      "status": "Imibele",
+      "viewAllOrders": "Mona Ifyakulomba Fyonse",
+      "recentTickets": "Amakalata Ayapya",
+      "latestSupportRequests": "Ifipusho fyenu ifipya ifya bwafwilisho",
+      "ticketID": "Inambala ya Kalata",
+      "subject": "Umutwe",
+      "viewAllTickets": "Mona Amakalata Yonse",
+      "technologyServices": "Imilimo ya Teknoloji",
+      "managedServices": "Imilimo yenu iya teknoloji iyatungululwa",
+      "nextRenewal": "Ukupilibula Kuleisa",
+      "resourceUsage": "Ukubomfya Ifipe",
+      "manageService": "Tungulula Umulimo",
+      "orderNewService": "Lomba Umulimo Upya",
+      "invoices": "Amakalata ya Mulimo",
+      "billingHistory": "Ifyalipo fyenu",
+      "invoiceID": "Inambala ya Kalata",
+      "dueDate": "Ubushiku bwa Kupela",
+      "amount": "Indalama",
+      "actions": "Ifyakucita",
+      "view": "Mona",
+      "pay": "Lipila Nomba",
+      "supportTickets": "Amakalata ya Bwafwilisho",
+      "helpRequests": "Ifipusho fyenu ifya bwafwilisho",
+      "priority": "Ubukankala",
+      "viewTicket": "Mona Kalata",
+      "createNewTicket": "Panga Kalata Ipya"
+    }
+  },
+  "common": {
+    "customer": "Kashitisha",
+    "tekremTech": "Tekrem Imilimo ya Teknoloji"
+  },
+  "customer": {
+    "orders": "Ifyakulomba",
+    "viewOrders": "Mona ifyakulomba",
+    "invoices": "Amakalata ya Mulimo",
+    "viewInvoices": "Mona amakalata ya mulimo",
+    "support": "Ubwafwilisho",
+    "viewTickets": "Mona amakalata",
+    "newTicket": "Kalata Ipya",
+    "createTicket": "Panga kalata"
+  }
+}

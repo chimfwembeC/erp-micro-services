@@ -30,6 +30,11 @@ class RolesAndPermissionsSeeder extends Seeder
             ['description' => 'Regular user']
         );
 
+        $customerRole = Role::firstOrCreate(
+            ['name' => 'customer'],
+            ['description' => 'Customer with limited access']
+        );
+
         // Create permissions
         $permissions = [
             // User management permissions
@@ -49,6 +54,21 @@ class RolesAndPermissionsSeeder extends Seeder
             // Permission management permissions
             'view_permissions' => 'Can view permissions',
             'assign_permissions' => 'Can assign permissions to roles',
+
+            // Audit permissions
+            'view_audit_logs' => 'Can view audit logs',
+            'export_audit_logs' => 'Can export audit logs',
+            'delete_audit_logs' => 'Can delete audit logs',
+
+            // Customer permissions
+            'view_profile' => 'Can view own profile',
+            'edit_profile' => 'Can edit own profile',
+            'view_orders' => 'Can view own orders',
+            'create_orders' => 'Can create new orders',
+            'view_invoices' => 'Can view own invoices',
+            'download_invoices' => 'Can download own invoices',
+            'submit_support_tickets' => 'Can submit support tickets',
+            'view_support_tickets' => 'Can view own support tickets',
         ];
 
         foreach ($permissions as $name => $description) {
@@ -63,13 +83,14 @@ class RolesAndPermissionsSeeder extends Seeder
         $adminRole->permissions()->detach();
         $managerRole->permissions()->detach();
         $userRole->permissions()->detach();
+        $customerRole->permissions()->detach();
 
         // Then, attach the appropriate permissions
         $adminRole->permissions()->attach(Permission::all());
 
         $managerPermissions = Permission::whereIn('name', [
             'view_users', 'create_users', 'edit_users', 'assign_roles', 'assign_direct_permissions',
-            'view_roles', 'view_permissions'
+            'view_roles', 'view_permissions', 'view_audit_logs'
         ])->get();
 
         $managerRole->permissions()->attach($managerPermissions);
@@ -79,5 +100,12 @@ class RolesAndPermissionsSeeder extends Seeder
         ])->get();
 
         $userRole->permissions()->attach($userPermissions);
+
+        $customerPermissions = Permission::whereIn('name', [
+            'view_profile', 'edit_profile', 'view_orders', 'create_orders',
+            'view_invoices', 'download_invoices', 'submit_support_tickets', 'view_support_tickets'
+        ])->get();
+
+        $customerRole->permissions()->attach($customerPermissions);
     }
 }

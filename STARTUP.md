@@ -16,6 +16,11 @@ The TekRem ERP system consists of multiple microservices:
    - Vite Server: Port 5174
    - URL: http://localhost:8002
 
+3. **Project Management Service** (Coming Soon)
+   - PHP Server: Port 8003
+   - Vite Server: Port 5175
+   - URL: http://localhost:8003
+
 ## Starting the Services
 
 ### Option 1: Using the Startup Script (Recommended)
@@ -29,7 +34,7 @@ We've provided a startup script that will launch all services in separate termin
 This script will:
 - Start the Auth Service PHP server on port 8000
 - Start the Auth Service Vite server on port 5173
-- Start the CRM Service PHP server on port 8001
+- Start the CRM Service PHP server on port 8002
 - Start the CRM Service Vite server on port 5174
 
 Each service will run in its own terminal window, making it easy to monitor logs and stop individual services.

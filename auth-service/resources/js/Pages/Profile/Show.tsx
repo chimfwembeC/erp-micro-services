@@ -8,6 +8,8 @@ import useTypedPage from '@/Hooks/useTypedPage';
 import SectionBorder from '@/Components/SectionBorder';
 import AppLayout from '@/Layouts/AppLayout';
 import { Session } from '@/types';
+import LanguagePreference from '@/Components/Profile/LanguagePreference';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   sessions: Session[];
@@ -19,13 +21,14 @@ export default function Show({
   confirmsTwoFactorAuthentication,
 }: Props) {
   const page = useTypedPage();
+  const { t } = useTranslation();
 
   return (
     <AppLayout
-      title={'Profile'}
+      title={t('common.profile')}
       renderHeader={() => (
-        <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-          Profile
+        <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+          {t('common.profile')}
         </h2>
       )}
     >
@@ -56,6 +59,12 @@ export default function Show({
               <SectionBorder />
             </div>
           ) : null}
+
+          <div className="mt-10 sm:mt-0">
+            <LanguagePreference user={page.props.auth.user!} />
+          </div>
+
+          <SectionBorder />
 
           <div className="mt-10 sm:mt-0">
             <LogoutOtherBrowserSessions sessions={sessions} />

@@ -18,6 +18,8 @@
     "account": "Account",
     "teams": "Teams",
     "language": "Language",
+    "languageChanged": "Language changed successfully",
+    "languageChangeError": "Failed to change language",
     "theme": "Theme",
     "light": "Light",
     "dark": "Dark",
@@ -31,7 +33,51 @@
     "search": "Search",
     "actions": "Actions",
     "submit": "Submit",
-    "reset": "Reset"
+    "reset": "Reset",
+    "saving": "Saving...",
+    "customer": "Customer",
+    "tekremTech": "Tekrem Technology Solutions",
+    "id": "ID",
+    "name": "Name",
+    "description": "Description",
+    "createdAt": "Created At",
+    "areYouSure": "Are you sure?",
+    "technologyProvider": "Technology Solutions Provider"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "team": "Team",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "footer": {
+    "description": "Technology Remedies Innovations - Providing innovative software solutions for businesses in Zambia and beyond.",
+    "links": "Links",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "connect": "Connect",
+    "rights": "All rights reserved."
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "forgotPassword": "Forgot Password",
+    "forgotPasswordInstructions": "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.",
+    "resetPassword": "Reset Password",
+    "rememberMe": "Remember Me",
+    "alreadyRegistered": "Already registered?",
+    "createAccount": "Create Account",
+    "verifyEmail": "Verify Email",
+    "verifyEmailInstructions": "Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.",
+    "resendVerificationEmail": "Resend Verification Email",
+    "twoFactorAuthentication": "Two Factor Authentication",
+    "twoFactorCode": "Two Factor Code",
+    "recoveryCode": "Recovery Code",
+    "emailPasswordResetLink": "Email Password Reset Link"
   },
   "users": {
     "manageUserAccounts": "Manage user accounts and permissions",
@@ -43,7 +89,18 @@
     "editUser": "Edit User",
     "deleteUser": "Delete User",
     "userDetails": "User Details",
-    "assignRoles": "Assign Roles"
+    "assignRoles": "Assign Roles",
+    "createNewUser": "Create New User",
+    "addNewUser": "Add a new user to the system",
+    "confirmPassword": "Confirm Password",
+    "directPermissions": "Direct Permissions",
+    "directPermissionsDescription": "These permissions are assigned directly to the user, regardless of their roles.",
+    "noRolePermission": "You don't have permission to assign roles. The user will be assigned the default 'user' role.",
+    "noPermissionAssign": "You don't have permission to assign permissions directly to users.",
+    "createSuccess": "User created successfully",
+    "createSuccessDescription": "User {{name}} has been created.",
+    "createError": "Failed to create user",
+    "createErrorDescription": "Please check the form for errors."
   },
   "roles": {
     "configureUserRoles": "Configure user roles and access levels",
@@ -54,7 +111,22 @@
     "editRole": "Edit Role",
     "deleteRole": "Delete Role",
     "roleDetails": "Role Details",
-    "assignPermissions": "Assign Permissions"
+    "assignPermissions": "Assign Permissions",
+    "title": "Roles",
+    "management": "Role Management",
+    "manageDescription": "Manage your system roles",
+    "addRole": "Add Role",
+    "createNewRole": "Create New Role",
+    "addNewRole": "Add a new role to the system",
+    "deleteSuccess": "Role deleted successfully",
+    "deleteSuccessDescription": "Role {{name}} has been deleted.",
+    "deleteError": "Failed to delete role",
+    "deleteErrorDescription": "An error occurred while deleting the role.",
+    "createSuccess": "Role created successfully",
+    "createSuccessDescription": "Role {{name}} has been created.",
+    "createError": "Failed to create role",
+    "createErrorDescription": "Please check the form for errors.",
+    "deleteConfirmation": "This will permanently delete the role \"{{name}}\". This action cannot be undone."
   },
   "permissions": {
     "defineGranularPermissions": "Define granular permissions for system access",
@@ -63,26 +135,206 @@
     "createPermission": "Create Permission",
     "editPermission": "Edit Permission",
     "deletePermission": "Delete Permission",
-    "permissionDetails": "Permission Details"
+    "permissionDetails": "Permission Details",
+    "title": "Permissions",
+    "group": {
+      "view": "View Permissions",
+      "create": "Create Permissions",
+      "edit": "Edit Permissions",
+      "delete": "Delete Permissions",
+      "manage": "Management Permissions"
+    }
+  },
+  "profile": {
+    "languagePreference": "Language Preference",
+    "selectYourPreferredLanguage": "Select your preferred language for the application",
+    "profileInformation": "Profile Information",
+    "updateProfileInformation": "Update your account's profile information and email address",
+    "photo": "Photo",
+    "selectNewPhoto": "Select A New Photo",
+    "removePhoto": "Remove Photo",
+    "name": "Name",
+    "email": "Email",
+    "emailUnverified": "Your email address is unverified",
+    "resendVerificationEmail": "Click here to re-send the verification email",
+    "verificationLinkSent": "A new verification link has been sent to your email address",
+    "saved": "Saved",
+    "browserSessions": "Browser Sessions",
+    "manageSessions": "Manage and log out your active sessions on other browsers and devices",
+    "lastActive": "Last active",
+    "logoutOtherSessions": "Log Out Other Browser Sessions",
+    "doneManagingSessions": "Done",
+    "confirmPassword": "Confirm Password",
+    "forSecurity": "For your security, please confirm your password to continue",
+    "iUnderstand": "I understand",
+    "nevermind": "Nevermind"
   },
   "auth": {
     "login": "Login",
     "register": "Register",
     "forgotPassword": "Forgot Password",
+    "forgotPasswordInstructions": "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.",
     "resetPassword": "Reset Password",
     "rememberMe": "Remember Me",
     "alreadyRegistered": "Already registered?",
     "createAccount": "Create Account",
     "verifyEmail": "Verify Email",
+    "verifyEmailInstructions": "Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.",
     "resendVerificationEmail": "Resend Verification Email",
     "twoFactorAuthentication": "Two Factor Authentication",
     "twoFactorCode": "Two Factor Code",
-    "recoveryCode": "Recovery Code"
+    "recoveryCode": "Recovery Code",
+    "emailPasswordResetLink": "Email Password Reset Link"
+  },
+  "welcome": {
+    "title": "Welcome to TekRem ERP System!",
+    "description": "TekRem ERP provides a comprehensive solution for managing your business operations. This system is designed to help you streamline your workflows, improve efficiency, and make better business decisions with powerful tools and insights.",
+    "pageTitle": "Welcome",
+    "footer": {
+      "ecosystem": "TekRem Microservices Ecosystem",
+      "techStack": "Laravel v{{laravelVersion}} (PHP v{{phpVersion}}) | React + TypeScript | ShadCN UI"
+    },
+    "features": {
+      "breadcrumbs": {
+        "title": "Breadcrumb Navigation",
+        "description": "Enhanced user experience with intuitive breadcrumb navigation throughout the application. Easily track your location and navigate back to previous pages with our clean, responsive breadcrumb implementation using ShadCN UI components."
+      },
+      "notifications": {
+        "title": "Sonner Notifications",
+        "description": "Receive immediate feedback with elegant toast notifications for all actions. Our implementation uses Sonner for beautiful, accessible notifications that provide clear feedback for form submissions, CRUD operations, and system events."
+      },
+      "theme": {
+        "title": "Dark/Light Theme",
+        "description": "Customize your experience with our seamless dark and light mode toggle. The theme system respects your system preferences by default but allows you to override them with a simple click, providing optimal viewing comfort in any environment."
+      },
+      "chat": {
+        "title": "Live Chat (Coming Soon)",
+        "description": "Real-time communication with WebSockets-powered live chat functionality. Connect instantly with support staff or team members through our responsive chat interface, coming soon to the CRM service and available for integration across all microservices."
+      },
+      "multilingual": {
+        "title": "Multilingual Support",
+        "description": "Reach a wider audience with our comprehensive multilingual support. The application is fully localized with i18next, supporting English and Zambian languages (Bemba, Nyanja, Tonga) with an easy language switcher in the navigation bar."
+      },
+      "dashboard": {
+        "title": "Role-Based Dashboard",
+        "description": "Experience personalized dashboards tailored to your role in the organization. Administrators see system-wide metrics, managers view team performance data, and regular users get personalized task information and activity metrics, all with beautiful Recharts visualizations."
+      }
+    }
+  },
+  "services": {
+    "pageTitle": "Services | Tekrem",
+    "title": "Our Services",
+    "subtitle": "Comprehensive technology solutions tailored to your business needs. From software development to networking, we've got you covered.",
+    "requestService": "Request this Service",
+    "tabs": {
+      "software": "Software",
+      "aiCloud": "AI & Cloud",
+      "networking": "Networking",
+      "consultancy": "Consultancy",
+      "graphics": "Graphics"
+    },
+    "software": {
+      "title": "Software Development",
+      "description": "Custom software solutions designed to streamline your business processes, enhance productivity, and drive growth."
+    },
+    "aiCloud": {
+      "title": "AI & Cloud Solutions",
+      "description": "Harness the power of artificial intelligence and cloud computing to transform your business operations and gain competitive advantage."
+    },
+    "networking": {
+      "title": "Networking Services",
+      "description": "Robust networking solutions to ensure secure, reliable, and high-performance connectivity for your business."
+    },
+    "consultancy": {
+      "title": "Consultancy Services",
+      "description": "Expert guidance and support to help you navigate the complex technology landscape and make informed decisions."
+    },
+    "graphics": {
+      "title": "Graphics Design",
+      "description": "Creative design solutions to enhance your brand identity and visual communication."
+    },
+    "process": {
+      "title": "Our Process",
+      "description": "We follow a structured approach to ensure the successful delivery of every project."
+    },
+    "cta": {
+      "title": "Ready to Transform Your Business?",
+      "description": "Contact us today to discuss how our services can help you achieve your business goals.",
+      "button": "Get in Touch"
+    }
+  },
+  "blog": {
+    "title": "TekRem Blog",
+    "subtitle": "Insights, updates, and resources for businesses using our ERP system.",
+    "featuredPost": "Featured Post",
+    "recentPosts": "Recent Posts",
+    "readMore": "Read More",
+    "loadMore": "Load More",
+    "noPosts": "No posts found in this category.",
+    "newsletter": {
+      "title": "Subscribe to Our Newsletter",
+      "description": "Stay updated with the latest insights, tips, and news about TekRem ERP and business technology.",
+      "placeholder": "Your email address",
+      "button": "Subscribe"
+    },
+    "categories": {
+      "all": "All",
+      "product": "Product",
+      "technology": "Technology",
+      "business": "Business",
+      "security": "Security",
+      "productivity": "Productivity",
+      "trends": "Trends",
+      "caseStudy": "Case Study"
+    },
+    "post": {
+      "by": "By",
+      "category": "Category",
+      "date": "Date"
+    }
+  },
+  "audit": {
+    "auditLogs": "Audit Logs",
+    "auditDetails": "Audit Details",
+    "description": "View and filter audit logs for all system activities.",
+    "user": "User",
+    "allUsers": "All Users",
+    "modelType": "Model Type",
+    "allModels": "All Models",
+    "event": "Event",
+    "allEvents": "All Events",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "filter": "Filter",
+    "timestamp": "Timestamp",
+    "model": "Model",
+    "modelId": "ID",
+    "noRecords": "No audit records found",
+    "system": "System",
+    "created": "Created",
+    "updated": "Updated",
+    "deleted": "Deleted",
+    "restored": "Restored",
+    "generalInfo": "General Information",
+    "generalInfoDescription": "Basic information about this audit record",
+    "id": "ID",
+    "url": "URL",
+    "ipAddress": "IP Address",
+    "currentState": "Current State",
+    "currentStateDescription": "Current state of the audited model",
+    "oldValues": "Old Values",
+    "oldValuesDescription": "Values before the change",
+    "newValues": "New Values",
+    "newValuesDescription": "Values after the change",
+    "field": "Field",
+    "value": "Value",
+    "export": "Export"
   },
   "dashboard": {
     "welcome": "Welcome, {{name}}!",
     "fromLastMonth": "from last month",
     "fromLastWeek": "from last week",
+    "error": "Error",
     "admin": {
       "overview": "System Overview",
       "users": "Users",
@@ -102,7 +354,63 @@
       "viewAllUsers": "View All Users",
       "rolePermissions": "Role Permissions",
       "roleOverview": "Overview of roles and their permissions",
+      "totalRoles": "Total Roles",
+      "definedRoles": "Defined roles in the system",
+      "mostPopularRole": "Most Popular Role",
+      "highestUserCount": "Role with highest user count",
+      "customerRole": "Customer Role",
+      "customerRoleStats": "Customer role statistics",
+      "registeredCustomers": "Registered customers",
+      "roleDetails": "Role Details",
+      "permissions": "Permissions",
+      "noPermissions": "No permissions assigned",
+      "noDescription": "No description provided",
+      "serviceIntegrations": "Service Integrations",
       "manageRoles": "Manage Roles"
+    },
+    "customer": {
+      "overview": "Overview",
+      "services": "Technology Services",
+      "billing": "Billing & Invoices",
+      "support": "Support",
+      "activeServices": "Active Services",
+      "currentlyActive": "Currently active services",
+      "pendingTickets": "Pending Tickets",
+      "openSupportRequests": "Open support requests",
+      "unpaidInvoices": "Unpaid Invoices",
+      "pendingPayments": "Pending payments",
+      "upcomingRenewals": "Upcoming Renewals",
+      "next30Days": "In the next 30 days",
+      "recentOrders": "Recent Orders",
+      "latestPurchases": "Your latest purchases",
+      "orderID": "Order ID",
+      "date": "Date",
+      "status": "Status",
+      "viewAllOrders": "View All Orders",
+      "recentTickets": "Recent Tickets",
+      "latestSupportRequests": "Your latest support requests",
+      "ticketID": "Ticket ID",
+      "subject": "Subject",
+      "viewAllTickets": "View All Tickets",
+      "technologyServices": "Technology Services",
+      "managedServices": "Your managed technology services",
+      "nextRenewal": "Next Renewal",
+      "resourceUsage": "Resource Usage",
+      "manageService": "Manage Service",
+      "orderNewService": "Order New Service",
+      "invoices": "Invoices",
+      "billingHistory": "Your billing history",
+      "invoiceID": "Invoice ID",
+      "dueDate": "Due Date",
+      "amount": "Amount",
+      "actions": "Actions",
+      "view": "View",
+      "pay": "Pay Now",
+      "supportTickets": "Support Tickets",
+      "helpRequests": "Your help requests",
+      "priority": "Priority",
+      "viewTicket": "View Ticket",
+      "createNewTicket": "Create New Ticket"
     },
     "manager": {
       "team": "Team Overview",

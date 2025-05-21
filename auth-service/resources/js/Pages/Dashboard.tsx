@@ -11,12 +11,14 @@ import axios from 'axios';
 import AdminDashboard from '@/Pages/Dashboards/AdminDashboard';
 import ManagerDashboard from '@/Pages/Dashboards/ManagerDashboard';
 import UserDashboard from '@/Pages/Dashboards/UserDashboard';
+import CustomerDashboard from '@/Pages/Dashboards/CustomerDashboard';
 
 // Dashboard data interface
 interface DashboardData {
   admin: any;
   manager: any;
   user: any;
+  customer: any;
 }
 
 export default function Dashboard({ auth }: PageProps) {
@@ -29,7 +31,11 @@ export default function Dashboard({ auth }: PageProps) {
 
   const userIsAdmin = isAdmin();
   const userIsManager = hasRole('manager');
-  const userIsRegular = hasRole('user') && !userIsAdmin && !userIsManager;
+  const userIsCustomer = hasRole('customer');
+  const userIsRegular = hasRole('user') && !userIsAdmin && !userIsManager && !userIsCustomer;
+
+  console.log('userIsAdmin', userIsAdmin);
+  console.log('userIsCustomer', userIsCustomer);
 
   // Fetch dashboard data from API
   useEffect(() => {
@@ -184,6 +190,117 @@ export default function Dashboard({ auth }: PageProps) {
           { name: 'Design new logo', project: 'Branding', deadline: '2023-07-30', status: 'Not Started', priority: 'Medium' },
           { name: 'Update user profile page', project: 'Website Redesign', deadline: '2023-08-05', status: 'Not Started', priority: 'Low' }
         ]
+      },
+      customer: {
+        stats: {
+          active_services_count: 3,
+          pending_tickets_count: 1,
+          unpaid_invoices_count: 2,
+          upcoming_renewals_count: 1
+        },
+        services: [
+          {
+            id: 1,
+            name: 'Cloud Server Hosting',
+            type: 'Infrastructure',
+            status: 'Active',
+            next_renewal: '2023-08-15',
+            usage: 78
+          },
+          {
+            id: 2,
+            name: 'Database Management',
+            type: 'Database',
+            status: 'Active',
+            next_renewal: '2023-09-22',
+            usage: 45
+          },
+          {
+            id: 3,
+            name: 'Web Application Firewall',
+            type: 'Security',
+            status: 'Active',
+            next_renewal: '2023-07-30',
+            usage: 92
+          },
+          {
+            id: 4,
+            name: 'Content Delivery Network',
+            type: 'Network',
+            status: 'Pending Setup',
+            next_renewal: '2023-10-15',
+            usage: 0
+          }
+        ],
+        orders: [
+          {
+            id: 'ORD-2023-001',
+            date: '2023-06-15',
+            items: 'Cloud Server Upgrade',
+            total: '$129.99',
+            status: 'Completed'
+          },
+          {
+            id: 'ORD-2023-002',
+            date: '2023-06-28',
+            items: 'SSL Certificate Renewal',
+            total: '$79.99',
+            status: 'Processing'
+          },
+          {
+            id: 'ORD-2023-003',
+            date: '2023-07-10',
+            items: 'Database Backup Service',
+            total: '$49.99',
+            status: 'Pending'
+          }
+        ],
+        invoices: [
+          {
+            id: 'INV-2023-001',
+            date: '2023-06-15',
+            due_date: '2023-07-15',
+            amount: '$129.99',
+            status: 'Paid'
+          },
+          {
+            id: 'INV-2023-002',
+            date: '2023-06-28',
+            due_date: '2023-07-28',
+            amount: '$79.99',
+            status: 'Unpaid'
+          },
+          {
+            id: 'INV-2023-003',
+            date: '2023-07-10',
+            due_date: '2023-08-10',
+            amount: '$49.99',
+            status: 'Unpaid'
+          }
+        ],
+        support_tickets: [
+          {
+            id: 'TKT-2023-001',
+            date: '2023-06-20',
+            subject: 'Server Connection Issue',
+            priority: 'High',
+            status: 'Open'
+          },
+          {
+            id: 'TKT-2023-002',
+            date: '2023-06-25',
+            subject: 'Billing Question',
+            priority: 'Medium',
+            status: 'Closed'
+          },
+          {
+            id: 'TKT-2023-003',
+            date: '2023-07-05',
+            subject: 'Website Performance',
+            priority: 'Low',
+            status: 'In Progress'
+          }
+        ]
       }
     };
   };
@@ -249,6 +366,27 @@ export default function Dashboard({ auth }: PageProps) {
                   data={dashboardData?.user || {
                     tasks: []
                   }}
+                />
+              )}
+
+              {/* Customer Dashboard */}
+              {userIsCustomer && (
+                <CustomerDashboard
+                  user={user}
+                  data={dashboardData?.customer || {
+                    stats: {
+                      active_services_count: 0,
+                      pending_tickets_count: 0,
+                      unpaid_invoices_count: 0,
+                      upcoming_renewals_count: 0
+                    },
+                    services: [],
+                    orders: [],
+                    invoices: [],
+                    support_tickets: []
+                  }}
+                  isLoading={loading}
+                  error={error}
                 />
               )}
             </>

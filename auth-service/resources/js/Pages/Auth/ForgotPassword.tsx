@@ -1,6 +1,7 @@
 import { useForm, Head } from '@inertiajs/react';
 import React from 'react';
 import useRoute from '@/Hooks/useRoute';
+import useTranslate from '@/Hooks/useTranslate';
 import AuthenticationCard from '@/Components/AuthenticationCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +13,7 @@ interface Props {
 
 export default function ForgotPassword({ status }: Props) {
   const route = useRoute();
+  const { t } = useTranslate();
   const form = useForm({
     email: '',
   });
@@ -23,12 +25,10 @@ export default function ForgotPassword({ status }: Props) {
 
   return (
     <AuthenticationCard>
-      <Head title="Forgot Password" />
+      <Head title={t('auth.forgotPassword')} />
 
       <div className="mb-4 text-sm text-muted-foreground">
-        Forgot your password? No problem. Just let us know your email address
-        and we will email you a password reset link that will allow you to
-        choose a new one.
+        {t('auth.forgotPasswordInstructions', 'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.')}
       </div>
 
       {status && (
@@ -39,7 +39,7 @@ export default function ForgotPassword({ status }: Props) {
 
       <form onSubmit={onSubmit} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('profile.email')}</Label>
           <Input
             id="email"
             type="email"
@@ -58,7 +58,7 @@ export default function ForgotPassword({ status }: Props) {
             type="submit"
             disabled={form.processing}
           >
-            Email Password Reset Link
+            {t('auth.emailPasswordResetLink', 'Email Password Reset Link')}
           </Button>
         </div>
       </form>

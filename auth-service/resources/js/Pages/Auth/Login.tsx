@@ -1,6 +1,7 @@
 import { Link, useForm, Head } from '@inertiajs/react';
 import React, { useEffect } from 'react';
 import useRoute from '@/Hooks/useRoute';
+import useTranslate from '@/Hooks/useTranslate';
 import AuthenticationCard from '@/Components/AuthenticationCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,6 +16,7 @@ interface Props {
 
 export default function Login({ canResetPassword, status }: Props) {
   const route = useRoute();
+  const { t } = useTranslate();
   const form = useForm({
     email: '',
     password: '',
@@ -42,23 +44,43 @@ export default function Login({ canResetPassword, status }: Props) {
     };
     const xsrfToken = getCookie('XSRF-TOKEN');
 
-    console.log('Submitting login form with:');
-    console.log('- CSRF Token from meta:', token);
-    console.log('- XSRF Token from cookie:', xsrfToken);
+    // console.log('Submitting login form with:');
+    // console.log('- CSRF Token from meta:', token);
+    // console.log('- XSRF Token from cookie:', xsrfToken);
 
-    // Use Inertia form submission
-    form.post(route('login'), {
-      onFinish: () => form.reset('password'),
+    // First try the SSO login endpoint
+    axios.post('/sso/login', {
+      email: form.data.email,
+      password: form.data.password,
+      device_name: 'browser'
+    }, {
       headers: {
         'X-CSRF-TOKEN': token || '',
         'X-XSRF-TOKEN': xsrfToken || '',
-      },
+      }
+    }).then(response => {
+      // Store the token in localStorage
+      localStorage.setItem('auth_token', response.data.token);
+
+      // Redirect to dashboard
+      window.location.href = '/dashboard';
+    }).catch(error => {
+      console.error('SSO login failed, falling back to traditional login', error);
+
+      // Fall back to traditional login
+      form.post(route('login'), {
+        onFinish: () => form.reset('password'),
+        headers: {
+          'X-CSRF-TOKEN': token || '',
+          'X-XSRF-TOKEN': xsrfToken || '',
+        },
+      });
     });
   }
 
   return (
     <AuthenticationCard>
-      <Head title="Login" />
+      <Head title={t('auth.login')} />
 
       {status && (
         <div className="mb-4 font-medium text-sm text-green-600">
@@ -68,7 +90,7 @@ export default function Login({ canResetPassword, status }: Props) {
 
       <form onSubmit={onSubmit} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('profile.email')}</Label>
           <Input
             id="email"
             type="email"
@@ -83,7 +105,7 @@ export default function Login({ canResetPassword, status }: Props) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">{t('profile.confirmPassword')}</Label>
           <Input
             id="password"
             type="password"
@@ -106,7 +128,7 @@ export default function Login({ canResetPassword, status }: Props) {
             }
           />
           <Label htmlFor="remember" className="text-sm text-muted-foreground">
-            Remember me
+            {t('auth.rememberMe')}
           </Label>
         </div>
 
@@ -117,7 +139,7 @@ export default function Login({ canResetPassword, status }: Props) {
                 href={route('password.request')}
                 className="text-sm text-primary hover:underline"
               >
-                Forgot your password?
+                {t('auth.forgotPassword')}
               </Link>
             </div>
           )}
@@ -127,14 +149,14 @@ export default function Login({ canResetPassword, status }: Props) {
               href={route('register')}
               className="text-sm text-primary hover:underline"
             >
-              Need an account?
+              {t('auth.alreadyRegistered')}
             </Link>
 
             <Button
               type="submit"
               disabled={form.processing}
             >
-              Log in
+              {t('auth.login')}
             </Button>
           </div>
         </div>

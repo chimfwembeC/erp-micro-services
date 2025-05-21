@@ -3,6 +3,9 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -35,9 +38,31 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        // Get the current locale
+        $locale = App::getLocale();
+
+        // Get user's preferred language if authenticated
+        $preferredLanguage = null;
+        if ($request->user()) {
+            $preferredLanguage = $request->user()->preferred_language;
+        }
+
         return [
             ...parent::share($request),
-            //
+            'auth' => [
+                'user' => $request->user() ?? session('auth_user'),
+                'authenticated' => $request->user() !== null || session()->has('auth_user'),
+            ],
+            'locale' => [
+                'current' => $locale,
+                'preferred' => $preferredLanguage,
+                'available' => [
+                    'en' => ['name' => 'English', 'nativeName' => 'English', 'flag' => '🇬🇧'],
+                    'bem' => ['name' => 'Bemba', 'nativeName' => 'Bemba', 'flag' => '🇿🇲'],
+                    'nya' => ['name' => 'Nyanja', 'nativeName' => 'Nyanja', 'flag' => '🇿🇲'],
+                    'toi' => ['name' => 'Tonga', 'nativeName' => 'Tonga', 'flag' => '🇿🇲'],
+                ],
+            ],
         ];
     }
 }

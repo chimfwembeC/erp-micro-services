@@ -3,6 +3,7 @@ import { Head, Link, router } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
 import { PageProps, AppRole } from '@/types';
 import useRoute from '@/Hooks/useRoute';
+import useTranslate from '@/Hooks/useTranslate';
 import BreadcrumbWrapper from '@/Components/BreadcrumbWrapper';
 import { showSuccess, showError } from '@/utils/notifications';
 import {
@@ -44,6 +45,7 @@ interface RolesIndexProps extends PageProps {
 
 export default function Index({ roles }: RolesIndexProps) {
   const route = useRoute();
+  const { t } = useTranslate();
   const [roleToDelete, setRoleToDelete] = useState<AppRole | null>(null);
 
   const handleDelete = () => {
@@ -51,14 +53,14 @@ export default function Index({ roles }: RolesIndexProps) {
       router.delete(route('roles.destroy', roleToDelete.id), {
         onSuccess: () => {
           setRoleToDelete(null);
-          showSuccess('Role deleted successfully', {
-            description: `Role ${roleToDelete.name} has been deleted.`
+          showSuccess(t('roles.deleteSuccess', 'Role deleted successfully'), {
+            description: t('roles.deleteSuccessDescription', 'Role {{name}} has been deleted.', { name: roleToDelete.name })
           });
         },
         onError: () => {
           setRoleToDelete(null);
-          showError('Failed to delete role', {
-            description: 'An error occurred while deleting the role.'
+          showError(t('roles.deleteError', 'Failed to delete role'), {
+            description: t('roles.deleteErrorDescription', 'An error occurred while deleting the role.')
           });
         }
       });
@@ -67,44 +69,44 @@ export default function Index({ roles }: RolesIndexProps) {
 
   return (
     <AppLayout
-      title="Roles"
+      title={t('roles.title', 'Roles')}
       renderHeader={() => (
         <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          Roles
+          {t('roles.title', 'Roles')}
         </h2>
       )}
     >
-      <Head title="Roles" />
+      <Head title={t('roles.title', 'Roles')} />
 
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="mb-6">
             <BreadcrumbWrapper
               items={[
-                { label: 'Roles' }
+                { label: t('roles.title', 'Roles') }
               ]}
             />
           </div>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Role Management</CardTitle>
-                <CardDescription>Manage your system roles</CardDescription>
+                <CardTitle>{t('roles.management', 'Role Management')}</CardTitle>
+                <CardDescription>{t('roles.manageDescription', 'Manage your system roles')}</CardDescription>
               </div>
               <Link href={route('roles.create')}>
-                <Button>Add Role</Button>
+                <Button>{t('roles.addRole', 'Add Role')}</Button>
               </Link>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>ID</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Permissions</TableHead>
-                    <TableHead>Created At</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead>{t('common.id', 'ID')}</TableHead>
+                    <TableHead>{t('common.name', 'Name')}</TableHead>
+                    <TableHead>{t('common.description', 'Description')}</TableHead>
+                    <TableHead>{t('permissions.title', 'Permissions')}</TableHead>
+                    <TableHead>{t('common.createdAt', 'Created At')}</TableHead>
+                    <TableHead>{t('common.actions', 'Actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -130,22 +132,22 @@ export default function Index({ roles }: RolesIndexProps) {
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="sm">
-                              Actions
+                              {t('common.actions', 'Actions')}
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem asChild>
-                              <Link href={route('roles.show', role.id)}>View</Link>
+                              <Link href={route('roles.show', role.id)}>{t('common.view', 'View')}</Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                              <Link href={route('roles.edit', role.id)}>Edit</Link>
+                              <Link href={route('roles.edit', role.id)}>{t('common.edit', 'Edit')}</Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="text-red-600 dark:text-red-400"
                               onClick={() => setRoleToDelete(role)}
                               disabled={role.name === 'admin'} // Prevent deleting admin role
                             >
-                              Delete
+                              {t('common.delete', 'Delete')}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -162,15 +164,15 @@ export default function Index({ roles }: RolesIndexProps) {
       <AlertDialog open={!!roleToDelete} onOpenChange={(open) => !open && setRoleToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t('common.areYouSure', 'Are you sure?')}</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete the role "{roleToDelete?.name}". This action cannot be undone.
+              {t('roles.deleteConfirmation', 'This will permanently delete the role "{{name}}". This action cannot be undone.', { name: roleToDelete?.name || '' })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('common.cancel', 'Cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
-              Delete
+              {t('common.delete', 'Delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

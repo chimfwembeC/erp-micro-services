@@ -1,0 +1,62 @@
+{
+  "dashboard": {
+    "customer": {
+      "overview": "Kubona Zyoonse",
+      "services": "Milimo ya Teknoloji",
+      "billing": "Kubadela a Mapepa a Mulimo",
+      "support": "Lugwasyo",
+      "activeServices": "Milimo Ibeleka",
+      "currentlyActive": "Milimo ibeleka lino",
+      "pendingTickets": "Mapepa Alindila",
+      "openSupportRequests": "Nkumbizyo zya lugwasyo zijukide",
+      "unpaidInvoices": "Mapepa Atanabadelwa",
+      "pendingPayments": "Kubadela kulindila",
+      "upcomingRenewals": "Kuvozya Kuboola",
+      "next30Days": "Mu mazuba 30 aboola",
+      "recentOrders": "Nkumbizyo Zipya",
+      "latestPurchases": "Zyintu zyako zyakulela kuula",
+      "orderID": "Nambala ya Nkumbizyo",
+      "date": "Buzuba",
+      "status": "Ciimo",
+      "viewAllOrders": "Bona Nkumbizyo Zyoonse",
+      "recentTickets": "Mapepa Mapya",
+      "latestSupportRequests": "Nkumbizyo zyako zyakulela zya lugwasyo",
+      "ticketID": "Nambala ya Pepa",
+      "subject": "Mutwe",
+      "viewAllTickets": "Bona Mapepa Oonse",
+      "technologyServices": "Milimo ya Teknoloji",
+      "managedServices": "Milimo yako ya teknoloji ilanganyidwe",
+      "nextRenewal": "Kuvozya Kuboola",
+      "resourceUsage": "Kubelesya Zyintu",
+      "manageService": "Langanya Mulimo",
+      "orderNewService": "Kumbila Mulimo Mupya",
+      "invoices": "Mapepa a Mulimo",
+      "billingHistory": "Makani ako akubadela",
+      "invoiceID": "Nambala ya Pepa",
+      "dueDate": "Buzuba bwa Kumanizya",
+      "amount": "Mali",
+      "actions": "Zyakucita",
+      "view": "Bona",
+      "pay": "Badela Lino",
+      "supportTickets": "Mapepa a Lugwasyo",
+      "helpRequests": "Nkumbizyo zyako zya lugwasyo",
+      "priority": "Bulemu",
+      "viewTicket": "Bona Pepa",
+      "createNewTicket": "Panga Pepa Pya"
+    }
+  },
+  "common": {
+    "customer": "Sikuula",
+    "tekremTech": "Tekrem Milimo ya Teknoloji"
+  },
+  "customer": {
+    "orders": "Nkumbizyo",
+    "viewOrders": "Bona nkumbizyo",
+    "invoices": "Mapepa a Mulimo",
+    "viewInvoices": "Bona mapepa a mulimo",
+    "support": "Lugwasyo",
+    "viewTickets": "Bona mapepa",
+    "newTicket": "Pepa Pya",
+    "createTicket": "Panga pepa"
+  }
+}

@@ -51,10 +51,15 @@ if (xsrfToken) {
   });
 }
 
-// Add a request interceptor to handle errors globally
+// Add a request interceptor to handle errors globally and add auth token
 axios.interceptors.request.use(
   config => {
-    // You can modify the request config here (add headers, etc.)
+    // Add the auth token from localStorage if available
+    const token = localStorage.getItem('auth_token');
+    if (token && !config.headers.Authorization) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
     return config;
   },
   error => {

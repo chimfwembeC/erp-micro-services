@@ -12,7 +12,10 @@ This document tracks the progress of tasks for the TekRem ERP system microservic
 1. Complete the Auth Service:
    - ✅ All tasks completed!
 
-2. Start Project & Task Management Service:
+2. Complete CRM / Client Management Service:
+   - ✅ All tasks completed!
+
+3. Start Project & Task Management Service:
    - Set up basic Laravel Jetstream with Inertia + React
    - Implement project and task CRUD operations
    - Add time logging functionality
@@ -29,34 +32,6 @@ This document tracks the progress of tasks for the TekRem ERP system microservic
      - Proper error handling for WebSocket connections
      - Graceful fallback when services are unavailable
      - Toast notifications using sonner
-
-3. Complete CRM / Client Management Service:
-   - ✅ Set up basic Laravel Jetstream with Inertia + React
-   - ✅ Implement ShadCN UI components and theming
-   - ✅ Set up dark/light mode toggle
-   - ✅ Configure multilingual support (English, Bemba, Nyanja, Tonga)
-   - ✅ Add breadcrumbs for improved navigation
-   - ✅ Implement role-based conditional navigation
-   - ✅ Configure Mailtrap email notifications
-   - ✅ Implement client CRUD operations
-   - ✅ Create client database migrations and model
-   - ✅ Implement client listing with pagination
-   - ✅ Create client details view with tabs
-   - ✅ Add lead management functionality
-   - ✅ Create lead database migrations and model
-   - ✅ Implement lead listing with pagination
-   - ✅ Create lead details view with communications tab
-   - ✅ Implement lead to client conversion functionality
-   - ✅ Create communication tracking for clients and leads
-   - ✅ Create communication database migrations and model
-   - ✅ Implement communication creation and editing
-   - ✅ Add communication listing in client and lead details
-   - ✅ Implement live chat functionality with WebSockets
-   - ✅ Create chat database migrations and model
-   - ✅ Implement real-time messaging with Pusher
-   - ✅ Create chat UI for clients and leads
-   - ✅ Create API endpoints for inter-service communication
-   - ✅ Develop role-based dashboard with visualizations
 
 ## Authentication & User Management Service
 

@@ -18,7 +18,7 @@
       @if (isset($_SERVER['HTTP_HOST']) && (str_contains($_SERVER['HTTP_HOST'], 'tekrem.local')))
         @vite(['resources/js/app.tsx'], 'http://auth.tekrem.local:5174')
       @else
-        @vite(['resources/js/app.tsx'], 'http://127.0.0.1:5173')
+        @vite(['resources/js/app.tsx'], 'http://127.0.0.1:5174')
       @endif
     @else
       @vite(['resources/js/app.tsx'])

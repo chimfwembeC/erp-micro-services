@@ -50,6 +50,18 @@ class ServicesSeeder extends Seeder
             ]
         );
 
+        // Create Project service
+        Service::firstOrCreate(
+            ['name' => 'project'],
+            [
+                'description' => 'Project Management Service',
+                'service_id' => 'project-service',
+                'service_secret' => Str::random(32),
+                'permissions' => ['read:users', 'read:roles', 'read:permissions'],
+                'is_active' => true,
+            ]
+        );
+
         // Output the service credentials for initial setup
         $this->command->info('Service credentials:');
         $services = Service::all();

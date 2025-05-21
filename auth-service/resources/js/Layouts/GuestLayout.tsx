@@ -48,12 +48,12 @@ export default function GuestLayout({
               >
                 {t('navigation.about', 'About')}
               </Link>
-              <Link
+              {/* <Link
                 href={route('services')}
                 className="text-sm font-medium transition-colors hover:text-primary"
               >
                 {t('navigation.services', 'Services')}
-              </Link>
+              </Link> */}
               <Link
                 href={route('portfolio')}
                 className="text-sm font-medium transition-colors hover:text-primary"
@@ -139,13 +139,13 @@ export default function GuestLayout({
                 >
                   {t('navigation.about', 'About')}
                 </Link>
-                <Link
+                {/* <Link
                   href={route('services')}
                   className="text-sm font-medium transition-colors hover:text-primary"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {t('navigation.services', 'Services')}
-                </Link>
+                </Link> */}
                 <Link
                   href={route('portfolio')}
                   className="text-sm font-medium transition-colors hover:text-primary"
@@ -225,7 +225,7 @@ export default function GuestLayout({
               <nav className="flex flex-col gap-2">
                 <Link href={route('welcome')} className="text-sm hover:underline">{t('navigation.home', 'Home')}</Link>
                 <Link href={route('about')} className="text-sm hover:underline">{t('navigation.about', 'About')}</Link>
-                <Link href={route('services')} className="text-sm hover:underline">{t('navigation.services', 'Services')}</Link>
+                {/* <Link href={route('services')} className="text-sm hover:underline">{t('navigation.services', 'Services')}</Link> */}
                 <Link href={route('portfolio')} className="text-sm hover:underline">{t('navigation.portfolio', 'Portfolio')}</Link>
                 <Link href={route('team')} className="text-sm hover:underline">{t('navigation.team', 'Team')}</Link>
                 <Link href={route('blog')} className="text-sm hover:underline">{t('navigation.blog', 'Blog')}</Link>

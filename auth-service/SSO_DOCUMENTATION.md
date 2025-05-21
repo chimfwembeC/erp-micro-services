@@ -164,22 +164,22 @@ class VerifySsoToken
     public function handle(Request $request, Closure $next)
     {
         $token = $request->bearerToken();
-        
+
         if (!$token) {
             return response()->json(['message' => 'Unauthenticated'], 401);
         }
-        
+
         // Validate the token with the auth service
         $response = Http::withToken($token)
             ->get(config('services.auth.url') . '/api/auth/validate-token');
-            
+
         if (!$response->successful() || !($response->json()['valid'] ?? false)) {
             return response()->json(['message' => 'Invalid token'], 401);
         }
-        
+
         // Add user data to the request
         $request->merge(['auth_user' => $response->json()['user']]);
-        
+
         return $next($request);
     }
 }
@@ -229,16 +229,16 @@ export default {
             password,
             device_name: 'browser'
         });
-        
+
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        
+
         return response.data;
     },
-    
+
     logout() {
         const token = localStorage.getItem('token');
-        
+
         if (token) {
             axios.post(`${AUTH_URL}/api/auth/logout`, {}, {
                 headers: {
@@ -246,20 +246,20 @@ export default {
                 }
             });
         }
-        
+
         localStorage.removeItem('token');
         localStorage.removeItem('user');
     },
-    
+
     getToken() {
         return localStorage.getItem('token');
     },
-    
+
     getUser() {
         const user = localStorage.getItem('user');
         return user ? JSON.parse(user) : null;
     },
-    
+
     isAuthenticated() {
         return !!this.getToken();
     }
@@ -315,3 +315,7 @@ curl -X POST \
 1. Check the Laravel logs in `storage/logs/laravel.log`
 2. Enable debug mode in `.env` by setting `APP_DEBUG=true`
 3. Use the token validation endpoint to check if a token is valid
+
+## Further Documentation
+
+For more detailed information about service management, see the [Services Documentation](SERVICES_DOCUMENTATION.md) file.

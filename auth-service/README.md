@@ -11,6 +11,7 @@ This microservice is part of the TekRem ERP system and is responsible for authen
 - Role and permission management
 - Password reset functionality
 - Email verification
+- Multilingual support (English, Bemba, Nyanja, Tonga)
 
 ## Technology Stack
 
@@ -18,6 +19,8 @@ This microservice is part of the TekRem ERP system and is responsible for authen
 - **Frontend**: Laravel Jetstream with Inertia + React
 - **UI Components**: ShadCN UI with Tailwind CSS
 - **Database**: MySQL via XAMPP
+- **Internationalization**: i18next, react-i18next
+- **Notifications**: Sonner Toast
 
 ## API Endpoints
 
@@ -34,6 +37,17 @@ The service exposes the following API endpoints for other microservices to consu
 - `GET /api/roles`: Get all roles (admin only)
 - `POST /api/roles`: Create a new role (admin only)
 - `GET /api/permissions`: Get all permissions (admin only)
+- `GET /api/services`: Get all services (admin only)
+- `GET /api/services/{id}`: Get a specific service (admin only)
+- `POST /api/services`: Create a new service (admin only)
+- `PUT /api/services/{id}`: Update a specific service (admin only)
+- `DELETE /api/services/{id}`: Delete a specific service (admin only)
+- `POST /api/services/{id}/regenerate-secret`: Regenerate a service secret (admin only)
+- `POST /api/auth/service-token`: Get a service token using service credentials
+- `GET /api/auth/validate-service-token`: Validate a service token
+- `POST /api/language/change`: Change the user's language preference
+- `GET /api/language/current`: Get the current language
+- `GET /api/language/available`: Get all available languages
 
 ## Development Setup
 
@@ -64,3 +78,15 @@ The service uses the following database tables:
 - `permissions`: Stores permission information
 - `role_user`: Pivot table for roles and users
 - `permission_role`: Pivot table for permissions and roles
+
+## Documentation
+
+The following documentation files are available:
+
+- [SSO Documentation](SSO_DOCUMENTATION.md): Information about the Single Sign-On implementation
+- [Services Documentation](SERVICES_DOCUMENTATION.md): Guide to the service management functionality
+- [API Documentation](README-API.md): Detailed API endpoint documentation
+- [Internationalization Documentation](INTERNATIONALIZATION.md): Guide to the multilingual support system
+- [Notifications Documentation](NOTIFICATIONS.md): Information about the toast notification system
+- [ShadCN Components Guide](SHADCN_COMPONENTS.md): Overview of the UI components used in the system
+- [Login Instructions](LOGIN_INSTRUCTIONS.md): Test user credentials and login information

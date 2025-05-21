@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\SsoController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -272,4 +273,12 @@ Route::middleware([
     Route::get('/audits/{audit}', [AuditController::class, 'show'])
         ->name('audits.show')
         ->middleware('can:view_audit_logs');
+
+    // Service management routes
+    Route::resource('services', ServiceController::class);
+
+    // Route for regenerating service secret
+    Route::post('/services/{service}/regenerate-secret', [ServiceController::class, 'regenerateSecret'])
+        ->name('services.regenerate-secret')
+        ->middleware('can:edit_services');
 });

@@ -55,6 +55,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'view_permissions' => 'Can view permissions',
             'assign_permissions' => 'Can assign permissions to roles',
 
+            // Service management permissions
+            'view_services' => 'Can view services',
+            'create_services' => 'Can create services',
+            'edit_services' => 'Can edit services',
+            'delete_services' => 'Can delete services',
+
             // Audit permissions
             'view_audit_logs' => 'Can view audit logs',
             'export_audit_logs' => 'Can export audit logs',
@@ -90,7 +96,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $managerPermissions = Permission::whereIn('name', [
             'view_users', 'create_users', 'edit_users', 'assign_roles', 'assign_direct_permissions',
-            'view_roles', 'view_permissions', 'view_audit_logs'
+            'view_roles', 'view_permissions', 'view_audit_logs', 'view_services'
         ])->get();
 
         $managerRole->permissions()->attach($managerPermissions);

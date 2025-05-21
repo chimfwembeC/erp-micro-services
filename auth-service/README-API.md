@@ -385,6 +385,196 @@ GET /permissions
 ]
 ```
 
+### Service Management
+
+#### Get All Services
+
+```
+GET /services
+```
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "name": "crm",
+    "description": "Customer Relationship Management Service",
+    "service_id": "crm-service",
+    "permissions": ["read:users", "read:roles"],
+    "is_active": true,
+    "created_at": "2023-01-01T00:00:00.000000Z",
+    "updated_at": "2023-01-01T00:00:00.000000Z"
+  }
+]
+```
+
+#### Get Service
+
+```
+GET /services/{id}
+```
+
+**Response:**
+```json
+{
+  "id": 1,
+  "name": "crm",
+  "description": "Customer Relationship Management Service",
+  "service_id": "crm-service",
+  "service_secret": "your-service-secret",
+  "permissions": ["read:users", "read:roles"],
+  "is_active": true,
+  "created_at": "2023-01-01T00:00:00.000000Z",
+  "updated_at": "2023-01-01T00:00:00.000000Z"
+}
+```
+
+#### Create Service
+
+```
+POST /services
+```
+
+**Request Body:**
+```json
+{
+  "name": "inventory",
+  "description": "Inventory Management Service",
+  "service_id": "inventory-service",
+  "permissions": ["read:users"],
+  "is_active": true
+}
+```
+
+**Response:**
+```json
+{
+  "id": 2,
+  "name": "inventory",
+  "description": "Inventory Management Service",
+  "service_id": "inventory-service",
+  "service_secret": "generated-service-secret",
+  "permissions": ["read:users"],
+  "is_active": true,
+  "created_at": "2023-01-01T00:00:00.000000Z",
+  "updated_at": "2023-01-01T00:00:00.000000Z"
+}
+```
+
+#### Update Service
+
+```
+PUT /services/{id}
+```
+
+**Request Body:**
+```json
+{
+  "name": "inventory",
+  "description": "Updated Inventory Management Service",
+  "service_id": "inventory-service",
+  "permissions": ["read:users", "read:roles"],
+  "is_active": true
+}
+```
+
+**Response:**
+```json
+{
+  "id": 2,
+  "name": "inventory",
+  "description": "Updated Inventory Management Service",
+  "service_id": "inventory-service",
+  "permissions": ["read:users", "read:roles"],
+  "is_active": true,
+  "created_at": "2023-01-01T00:00:00.000000Z",
+  "updated_at": "2023-01-01T00:00:00.000000Z"
+}
+```
+
+#### Delete Service
+
+```
+DELETE /services/{id}
+```
+
+**Response:**
+```json
+{
+  "message": "Service deleted successfully"
+}
+```
+
+#### Regenerate Service Secret
+
+```
+POST /services/{id}/regenerate-secret
+```
+
+**Response:**
+```json
+{
+  "id": 2,
+  "service_secret": "new-generated-service-secret",
+  "message": "Service secret regenerated successfully"
+}
+```
+
+### Service Authentication
+
+#### Get Service Token
+
+```
+POST /auth/service-token
+```
+
+**Request Body:**
+```json
+{
+  "service_id": "crm-service",
+  "service_secret": "your-service-secret"
+}
+```
+
+**Response:**
+```json
+{
+  "token": "2|abcdefghijklmnopqrstuvwxyz123456",
+  "expires_at": "2023-05-17T12:00:00.000000Z",
+  "service": {
+    "id": 1,
+    "name": "crm",
+    "abilities": ["service:crm", "read:users"]
+  },
+  "message": "Service token created successfully"
+}
+```
+
+#### Validate Service Token
+
+```
+GET /auth/validate-service-token
+```
+
+**Headers:**
+```
+Authorization: Bearer YOUR_SERVICE_TOKEN
+```
+
+**Response:**
+```json
+{
+  "valid": true,
+  "service": {
+    "id": 1,
+    "name": "crm",
+    "abilities": ["service:crm", "read:users"]
+  }
+}
+```
+```
+
 #### Get Permission by ID
 
 ```

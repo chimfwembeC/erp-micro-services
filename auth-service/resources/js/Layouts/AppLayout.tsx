@@ -43,7 +43,8 @@ import {
   ShieldCheck,
   Lock,
   LayoutDashboard,
-  History
+  History,
+  Server
 } from 'lucide-react';
 
 interface Props {
@@ -87,6 +88,13 @@ export default function AppLayout({
       permission: 'view_roles'
     },
     {
+      name: t('services.title', 'Services'),
+      href: route('services.index'),
+      icon: Server,
+      active: route().current('services.*'),
+      permission: 'view_services'
+    },
+    {
       name: t('common.rolesDashboard'),
       href: route('roles.dashboard'),
       icon: ShieldCheck,
@@ -123,7 +131,8 @@ export default function AppLayout({
   const canViewRoles = userIsAdmin || hasPermission('view_roles');
   const canViewPermissions = userIsAdmin || hasPermission('view_permissions');
   const canViewAuditLogs = userIsAdmin || hasPermission('view_audit_logs');
-  const canAccessAdminSection = canViewUsers || canViewRoles || canViewPermissions || canViewAuditLogs;
+  const canViewServices = userIsAdmin || hasPermission('view_services');
+  const canAccessAdminSection = canViewUsers || canViewRoles || canViewPermissions || canViewAuditLogs || canViewServices;
 
   // Check permissions for customer section
   const canViewOrders = userIsAdmin || hasPermission('view_orders');
@@ -197,7 +206,8 @@ export default function AppLayout({
                             (item.permission === 'view_users' ||
                              item.permission === 'view_roles' ||
                              item.permission === 'view_permissions' ||
-                             item.permission === 'view_audit_logs') &&
+                             item.permission === 'view_audit_logs' ||
+                             item.permission === 'view_services') &&
                             (hasPermission(item.permission) || userIsAdmin)
                           ).map((item, index) => (
                             <Link
@@ -214,6 +224,7 @@ export default function AppLayout({
                                 {item.permission === 'view_roles' && t('roles.configureUserRoles')}
                                 {item.permission === 'view_permissions' && t('permissions.defineGranularPermissions')}
                                 {item.permission === 'view_audit_logs' && t('audit.description')}
+                                {item.permission === 'view_services' && t('services.manageServiceDescription', 'Manage service-to-service authentication')}
                               </p>
                             </Link>
                           ))}
